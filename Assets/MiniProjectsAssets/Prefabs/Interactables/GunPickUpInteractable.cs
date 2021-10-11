@@ -10,15 +10,19 @@ public class GunPickUpInteractable : Interactable
     private void Awake()
     {
         gunInteractableTriggerBox = gameObject.GetComponent<BoxCollider>();
+        typeOfWeapon = GetComponent<Weapon>();
     }
     public override void Interacting()
     {
         if (gunInteractableTriggerBox.enabled == true)
         {
             playerWeaponInventory.AddToWeaponList(typeOfWeapon);
+            //chooseVisisable.
+            playerWeaponInventory.
             transform.position = playerWeaponInventory.GetWeaponSpawnLoc().position;
             transform.rotation = playerWeaponInventory.GetWeaponSpawnLoc().rotation;
             transform.parent = playerWeaponInventory.GetWeaponSpawnLoc();
+
             gunInteractableTriggerBox.enabled = false;
         }
     }
@@ -28,12 +32,7 @@ public class GunPickUpInteractable : Interactable
         {
             print(other.name);
             //needs fix after refactoring
-            //playerWeaponInventory = transform.parent.GetComponent<PlayerScript>();
-            if (playerWeaponInventory != null)
-            {
-                print("TRIGGER BOX IS REAL");
-            }
-            else { print("TRIGGER BOX IS NO REAL"); }
+            playerWeaponInventory = other.transform.parent.GetComponent<PlayerScript>();
         }
     }
 }

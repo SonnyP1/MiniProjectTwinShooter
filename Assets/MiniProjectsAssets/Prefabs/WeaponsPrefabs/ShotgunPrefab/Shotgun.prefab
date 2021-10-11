@@ -283,10 +283,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3c4801099ec6e245a6f8e40807f88b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RegularAmmoReduce: 1
+  AltAmmoReduce: 2
   TimeBetweenBulletsFirstAttack: 0.5
   TimeBetweenBulletsSecoundAttack: 1
-  CurrentAmmo: 12
-  MaxAmmo: 12
+  CurrentAmmo: 0
+  MaxAmmo: 8
   ReloadTime: 2
   meshRender: {fileID: 2872997150691878985}
   Projectile: {fileID: 756383067034050049, guid: e229fce7642b2154189cb41d6a98366f, type: 3}

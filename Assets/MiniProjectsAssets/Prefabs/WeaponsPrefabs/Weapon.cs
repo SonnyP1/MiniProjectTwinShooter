@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    [SerializeField] int RegularAmmoReduce;
+    [SerializeField] int AltAmmoReduce;
     [SerializeField] float TimeBetweenBulletsFirstAttack;
     [SerializeField] float TimeBetweenBulletsSecoundAttack;
     [SerializeField] int CurrentAmmo;
@@ -31,7 +33,7 @@ public class Weapon : MonoBehaviour
         if (!isReloading() && CurrentAmmo > 0 && waitForNextShot == null)
         {
             FireBullet(projectileType, TimeBetweenBulletsFirstAttack);
-            CurrentAmmo--;
+            CurrentAmmo = Mathf.Clamp(CurrentAmmo - RegularAmmoReduce, 0, MaxAmmo);
         }
     }
     public virtual void SecoundaryAttack()
@@ -39,7 +41,7 @@ public class Weapon : MonoBehaviour
         if (!isReloading() && CurrentAmmo > 0 && waitForNextShot == null)
         {
             FireBullet(secondaryProjectileType, TimeBetweenBulletsSecoundAttack);
-            CurrentAmmo--;
+            CurrentAmmo = Mathf.Clamp(CurrentAmmo - AltAmmoReduce,0,MaxAmmo);
         }
     }
 
