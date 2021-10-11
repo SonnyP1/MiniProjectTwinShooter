@@ -34,7 +34,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.GetComponent<Projectile>())
+        if(other.gameObject.GetComponent<Projectile>() || other.GetComponent<InteractComp>())
         {
             return;
         }

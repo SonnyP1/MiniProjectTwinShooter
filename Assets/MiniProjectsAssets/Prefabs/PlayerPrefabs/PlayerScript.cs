@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour
     MovementComp movementComp;
     //Gun Stuff
     [SerializeField] List<Weapon> tempWeapons = new List<Weapon>();
+    [SerializeField] Transform WeaponsSpawnLoc;
     int currentWeaponSelection;
     //Player Needs Stuff
     PlayerInputs playerInput;
@@ -25,7 +26,11 @@ public class PlayerScript : MonoBehaviour
     {
         playerInput.Disable();
     }
-
+    public Transform GetWeaponSpawnLoc() { return WeaponsSpawnLoc; }
+    public void AddToWeaponList(Weapon weaponToAdd)
+    {
+        tempWeapons.Add(weaponToAdd);
+    }
     private void Start()
     {
         ChooseWeaponsVisability();
@@ -40,10 +45,8 @@ public class PlayerScript : MonoBehaviour
         playerInput.Gameplay.Dodge.performed += OnDodgePressedUpdated;
         playerInput.Gameplay.MouseWheel.performed += OnMouseWheelUpdated;
         playerInput.Gameplay.Reload.performed += OnReloadButtonPressed;
+        playerInput.Gameplay.Interact.performed += OnInteractButtonPressed;
     }
-
-
-
     void ChooseWeaponsVisability()
     {
         Weapon[] currentHeldWeapons = tempWeapons.ToArray();
@@ -57,6 +60,14 @@ public class PlayerScript : MonoBehaviour
             {
                 var.SetGunVisibility(false);
             }
+        }
+    }
+    void OnInteractButtonPressed(InputAction.CallbackContext ctx)
+    {
+        InteractComp interactComp = GetComponentInChildren<InteractComp>();
+        if(interactComp != null)
+        {
+            interactComp.InteractWithInteractable();
         }
     }
     void OnReloadButtonPressed(InputAction.CallbackContext ctx)
