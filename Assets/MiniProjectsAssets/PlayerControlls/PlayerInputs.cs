@@ -57,6 +57,22 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""MouseWheel"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""6143ca61-d445-4a5f-a0bf-d3f889e46fc7"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""7ed84758-7b73-49fa-942e-240c26866610"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -158,6 +174,28 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1c153d36-24ba-44d3-a848-a21394c5ac81"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseWheel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d3889827-6960-4afa-a3d6-48f28b4e9b0f"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -171,6 +209,8 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         m_Gameplay_OnLeftClick = m_Gameplay.FindAction("OnLeftClick", throwIfNotFound: true);
         m_Gameplay_OnRightClick = m_Gameplay.FindAction("OnRightClick", throwIfNotFound: true);
         m_Gameplay_Dodge = m_Gameplay.FindAction("Dodge", throwIfNotFound: true);
+        m_Gameplay_MouseWheel = m_Gameplay.FindAction("MouseWheel", throwIfNotFound: true);
+        m_Gameplay_Reload = m_Gameplay.FindAction("Reload", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -225,6 +265,8 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_OnLeftClick;
     private readonly InputAction m_Gameplay_OnRightClick;
     private readonly InputAction m_Gameplay_Dodge;
+    private readonly InputAction m_Gameplay_MouseWheel;
+    private readonly InputAction m_Gameplay_Reload;
     public struct GameplayActions
     {
         private @PlayerInputs m_Wrapper;
@@ -234,6 +276,8 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         public InputAction @OnLeftClick => m_Wrapper.m_Gameplay_OnLeftClick;
         public InputAction @OnRightClick => m_Wrapper.m_Gameplay_OnRightClick;
         public InputAction @Dodge => m_Wrapper.m_Gameplay_Dodge;
+        public InputAction @MouseWheel => m_Wrapper.m_Gameplay_MouseWheel;
+        public InputAction @Reload => m_Wrapper.m_Gameplay_Reload;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -258,6 +302,12 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Dodge.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDodge;
                 @Dodge.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDodge;
                 @Dodge.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDodge;
+                @MouseWheel.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMouseWheel;
+                @MouseWheel.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMouseWheel;
+                @MouseWheel.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMouseWheel;
+                @Reload.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnReload;
+                @Reload.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnReload;
+                @Reload.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnReload;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -277,6 +327,12 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Dodge.started += instance.OnDodge;
                 @Dodge.performed += instance.OnDodge;
                 @Dodge.canceled += instance.OnDodge;
+                @MouseWheel.started += instance.OnMouseWheel;
+                @MouseWheel.performed += instance.OnMouseWheel;
+                @MouseWheel.canceled += instance.OnMouseWheel;
+                @Reload.started += instance.OnReload;
+                @Reload.performed += instance.OnReload;
+                @Reload.canceled += instance.OnReload;
             }
         }
     }
@@ -288,5 +344,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         void OnOnLeftClick(InputAction.CallbackContext context);
         void OnOnRightClick(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
+        void OnMouseWheel(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
 }

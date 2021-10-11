@@ -74,7 +74,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4497266fd882f224db62dec74fdf2257, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeToUnParent: 0.2
+  TimeBetweenBulletsFirstAttack: 0.5
+  TimeBetweenBulletsSecoundAttack: 2
+  CurrentAmmo: 0
+  MaxAmmo: 10
+  ReloadTime: 5
+  meshRender: {fileID: 408449320829187002}
   Projectile: {fileID: 756383067034050049, guid: e229fce7642b2154189cb41d6a98366f, type: 3}
   SecoundaryProjectile: {fileID: 9056436997583568616, guid: c12e75b0c9714a44e90a566985436ec6, type: 3}
   spawnLocation: {fileID: 5465891716019589585}

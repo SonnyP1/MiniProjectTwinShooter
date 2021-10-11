@@ -282,6 +282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TimeBetweenBulletsFirstAttack: 0.5
   TimeBetweenBulletsSecoundAttack: 1
+  meshRender: {fileID: 2872997150691878985}
   Projectile: {fileID: 756383067034050049, guid: e229fce7642b2154189cb41d6a98366f, type: 3}
   SecoundaryProjectile: {fileID: 7712515767881161978, guid: a70717ab88b218544b398d3f0518368d, type: 3}
   spawnLocations:
