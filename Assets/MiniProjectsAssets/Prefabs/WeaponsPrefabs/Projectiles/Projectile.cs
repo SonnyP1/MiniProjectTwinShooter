@@ -5,9 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Projectile : MonoBehaviour
 {
-    Rigidbody projectileRB;
     [SerializeField] float projectileSpeed;
-    MeshRenderer meshRender;
+    private Rigidbody projectileRB;
+    private MeshRenderer meshRender;
     void Start()
     {
         projectileRB = GetComponent<Rigidbody>();

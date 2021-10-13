@@ -1,12 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GunPickUpInteractable : Interactable
 {
-    PlayerScript playerWeaponInventory;
-    BoxCollider gunInteractableTriggerBox;
-    Weapon typeOfWeapon;
+    private WeaponInventorySystem playerWeaponInventory;
+    private BoxCollider gunInteractableTriggerBox;
+    private Weapon typeOfWeapon;
     private void Awake()
     {
         gunInteractableTriggerBox = gameObject.GetComponent<BoxCollider>();
@@ -17,8 +18,7 @@ public class GunPickUpInteractable : Interactable
         if (gunInteractableTriggerBox.enabled == true)
         {
             playerWeaponInventory.AddToWeaponList(typeOfWeapon);
-            //chooseVisisable.
-            playerWeaponInventory.
+            playerWeaponInventory.ChangeWeaponToLastSelection();
             transform.position = playerWeaponInventory.GetWeaponSpawnLoc().position;
             transform.rotation = playerWeaponInventory.GetWeaponSpawnLoc().rotation;
             transform.parent = playerWeaponInventory.GetWeaponSpawnLoc();
@@ -28,11 +28,9 @@ public class GunPickUpInteractable : Interactable
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.CompareTag("PlayerInteract"))
         {
-            print(other.name);
-            //needs fix after refactoring
-            playerWeaponInventory = other.transform.parent.GetComponent<PlayerScript>();
+            playerWeaponInventory = other.transform.parent.GetComponent<WeaponInventorySystem>();
         }
     }
 }

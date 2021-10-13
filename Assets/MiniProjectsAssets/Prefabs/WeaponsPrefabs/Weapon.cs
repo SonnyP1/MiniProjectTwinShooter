@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [SerializeField] int RegularAmmoReduce;
-    [SerializeField] int AltAmmoReduce;
-    [SerializeField] float TimeBetweenBulletsFirstAttack;
-    [SerializeField] float TimeBetweenBulletsSecoundAttack;
-    [SerializeField] int CurrentAmmo;
-    [SerializeField] int MaxAmmo;
-    [SerializeField] float ReloadTime;
+    [SerializeField] int regularAmmoReduce;
+    [SerializeField] int altAmmoReduce;
+    [SerializeField] float timeBetweenBulletsFirstAttack;
+    [SerializeField] float timeBetweenBulletsSecoundAttack; 
+    private int currentAmmo;
+    [SerializeField] int maxAmmo;
+    [SerializeField] float reloadTime;
     [SerializeField] MeshRenderer meshRender;
-    Projectile projectileType;
-    Projectile secondaryProjectileType;
-    List<Transform> spawnLocList = new List<Transform>();
-    Coroutine waitForNextShot;
-    Coroutine Reloading;
-    float TimeToUnParent = .2f;
+    private Projectile projectileType;
+    private Projectile secondaryProjectileType;
+    private List<Transform> spawnLocList = new List<Transform>();
+    private Coroutine waitForNextShot;
+    private Coroutine reloadingCoroutine;
+    private float timeToUnParent = .2f;
     private void Awake()
     {
-        CurrentAmmo = MaxAmmo;
+        currentAmmo = maxAmmo;
     }
     public void SetProjectile(Projectile newProjectile) { projectileType = newProjectile; }
     public void SetSecoundaryProjectile(Projectile newProjectile) { secondaryProjectileType = newProjectile; }
@@ -30,50 +30,50 @@ public class Weapon : MonoBehaviour
     }
     public virtual void Attack()
     {
-        if (!isReloading() && CurrentAmmo > 0 && waitForNextShot == null)
+        if (!IsReloading() && currentAmmo > 0 && waitForNextShot == null)
         {
-            FireBullet(projectileType, TimeBetweenBulletsFirstAttack);
-            CurrentAmmo = Mathf.Clamp(CurrentAmmo - RegularAmmoReduce, 0, MaxAmmo);
+            FireBullet(projectileType, timeBetweenBulletsFirstAttack);
+            currentAmmo = Mathf.Clamp(currentAmmo - regularAmmoReduce, 0, maxAmmo);
         }
     }
-    public virtual void SecoundaryAttack()
+    public virtual void SecondaryAttack()
     {
-        if (!isReloading() && CurrentAmmo > 0 && waitForNextShot == null)
+        if (!IsReloading() && currentAmmo > 0 && waitForNextShot == null)
         {
-            FireBullet(secondaryProjectileType, TimeBetweenBulletsSecoundAttack);
-            CurrentAmmo = Mathf.Clamp(CurrentAmmo - AltAmmoReduce,0,MaxAmmo);
+            FireBullet(secondaryProjectileType, timeBetweenBulletsSecoundAttack);
+            currentAmmo = Mathf.Clamp(currentAmmo - altAmmoReduce,0,maxAmmo);
         }
     }
 
-    void FireBullet(Projectile projectileType,float TimeBetweenBullets)
+    void FireBullet(Projectile projectileType,float timeBetweenBullets)
     {
         if(waitForNextShot==null)
         {
-            waitForNextShot = StartCoroutine(WaitForNextShot(TimeBetweenBullets));
+            waitForNextShot = StartCoroutine(WaitForNextShot(timeBetweenBullets));
             foreach (Transform var in spawnLocList)
             {
-                StartCoroutine(WaitToUnParentBullet(Instantiate(projectileType, var), TimeToUnParent));
+                StartCoroutine(WaitToUnParentBullet(Instantiate(projectileType, var), timeToUnParent));
             }
         }
     }
     public virtual void Reload()
     {
-        if (!isReloading())
+        if (!IsReloading())
         {
-            Reloading = StartCoroutine(Reload(ReloadTime));
+            reloadingCoroutine = StartCoroutine(ReloadTimer());
         }
     }
-    IEnumerator Reload(float reloadTime)
+    IEnumerator ReloadTimer()
     {
         float startTime = 0;
-        while(startTime < ReloadTime)
+        while(startTime < reloadTime)
         {
             startTime += Time.deltaTime;
             Debug.Log("RELOADING: " + startTime);
             yield return new WaitForEndOfFrame();
         }
-        CurrentAmmo = MaxAmmo;
-        Reloading = null;
+        currentAmmo = maxAmmo;
+        reloadingCoroutine = null;
     }
     IEnumerator WaitToUnParentBullet(Projectile projectileToWait,float timeToUnParent)
     {
@@ -82,10 +82,10 @@ public class Weapon : MonoBehaviour
             projectileToWait.transform.parent = null;
     }
 
-    IEnumerator WaitForNextShot(float MaxTime)
+    IEnumerator WaitForNextShot(float maxTime)
     {
         float startTime = 0f;
-        while(startTime < MaxTime)
+        while(startTime < maxTime)
         {
             startTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
@@ -93,7 +93,7 @@ public class Weapon : MonoBehaviour
         waitForNextShot = null;
     }
 
-    bool isReloading() { if (Reloading == null) { return false; } else { return true; } }
+    bool IsReloading() { if (reloadingCoroutine == null) { return false; } else { return true; } }
     public void SetGunVisibility(bool isVis)
     {
         if (meshRender != null)

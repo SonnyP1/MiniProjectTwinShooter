@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Pistol : Weapon
 {
-    [SerializeField] Projectile Projectile;
-    [SerializeField] Projectile SecoundaryProjectile;
+    [SerializeField] Projectile projectile;
+    [SerializeField] Projectile secondaryProjectile;
     [SerializeField] Transform spawnLocation;
 
 
     private void Start()
     {
-        SetProjectile(Projectile);
-        SetSecoundaryProjectile(SecoundaryProjectile);
+        SetProjectile(projectile);
+        SetSecoundaryProjectile(secondaryProjectile);
         SetSpawnLoc(spawnLocation);
     }
 
@@ -21,9 +21,9 @@ public class Pistol : Weapon
         base.Attack();
     }
 
-    public override void SecoundaryAttack()
+    public override void SecondaryAttack()
     {
-        base.SecoundaryAttack();
+        base.SecondaryAttack();
     }
 
     public override void Reload()

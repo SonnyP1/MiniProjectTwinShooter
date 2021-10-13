@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Shotgun : Weapon
 {
-    [SerializeField] Projectile Projectile;
-    [SerializeField] Projectile SecoundaryProjectile;
+    [SerializeField] Projectile projectile;
+    [SerializeField] Projectile secondaryProjectile;
     [SerializeField] Transform[] spawnLocations;
     private void Start()
     {
-        SetProjectile(Projectile);
-        SetSecoundaryProjectile(SecoundaryProjectile);
+        SetProjectile(projectile);
+        SetSecoundaryProjectile(secondaryProjectile);
 
         foreach (Transform var in spawnLocations)
         {
@@ -23,9 +23,9 @@ public class Shotgun : Weapon
         base.Attack();
     }
 
-    public override void SecoundaryAttack()
+    public override void SecondaryAttack()
     {
-        base.SecoundaryAttack();
+        base.SecondaryAttack();
     }
 
     public override void Reload()

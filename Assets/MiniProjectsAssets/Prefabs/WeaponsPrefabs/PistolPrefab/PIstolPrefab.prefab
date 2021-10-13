@@ -40,6 +40,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7544942550615647695}
   - component: {fileID: 2101130150530735452}
+  - component: {fileID: 3212834126940030615}
+  - component: {fileID: 3166523032222098715}
   m_Layer: 0
   m_Name: PIstolPrefab
   m_TagString: Untagged
@@ -74,17 +76,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4497266fd882f224db62dec74fdf2257, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RegularAmmoReduce: 1
-  AltAmmoReduce: 5
-  TimeBetweenBulletsFirstAttack: 0.5
-  TimeBetweenBulletsSecoundAttack: 2
-  CurrentAmmo: 0
-  MaxAmmo: 10
-  ReloadTime: 5
+  regularAmmoReduce: 2
+  altAmmoReduce: 3
+  timeBetweenBulletsFirstAttack: 0.2
+  timeBetweenBulletsSecoundAttack: 0.4
+  maxAmmo: 10
+  reloadTime: 0.3
   meshRender: {fileID: 408449320829187002}
-  Projectile: {fileID: 756383067034050049, guid: e229fce7642b2154189cb41d6a98366f, type: 3}
-  SecoundaryProjectile: {fileID: 9056436997583568616, guid: c12e75b0c9714a44e90a566985436ec6, type: 3}
+  projectile: {fileID: 756383067034050049, guid: e229fce7642b2154189cb41d6a98366f, type: 3}
+  secondaryProjectile: {fileID: 9056436997583568616, guid: c12e75b0c9714a44e90a566985436ec6, type: 3}
   spawnLocation: {fileID: 5465891716019589585}
+--- !u!65 &3212834126940030615
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5681016452501056005}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3166523032222098715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5681016452501056005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08431b0193961b64f812989807166e95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8562479051879753182
 GameObject:
   m_ObjectHideFlags: 0

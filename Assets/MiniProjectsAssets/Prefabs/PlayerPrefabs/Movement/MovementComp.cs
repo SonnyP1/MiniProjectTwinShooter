@@ -9,7 +9,7 @@ public class MovementComp : MonoBehaviour
     [SerializeField] float WalkingSpeed;
     [SerializeField] float DodgeMultiplierOfWalkingSpeed;
     [SerializeField] float DodgeLengthOfTime;
-    [SerializeField] BoxCollider playerHitBox;
+    [SerializeField] BoxCollider characterHitBox;
     IInputActionCollection InputActions;
     Vector3 Velocity;
     const float GRAVITY = -9.8f;
@@ -70,7 +70,7 @@ public class MovementComp : MonoBehaviour
     {
         Vector3 LastInputs = PlayerMovementDir();
         InputActions.Disable();
-        playerHitBox.enabled = false;
+        characterHitBox.enabled = false;
 
 
         float startTime = 0;
@@ -90,7 +90,7 @@ public class MovementComp : MonoBehaviour
 
 
         DodgeCoroutine = null;
-        playerHitBox.enabled = true;
+        characterHitBox.enabled = true;
         InputActions.Enable();
     }
 
