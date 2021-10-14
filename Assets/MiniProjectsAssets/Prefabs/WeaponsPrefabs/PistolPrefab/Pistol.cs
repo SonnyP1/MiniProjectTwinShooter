@@ -19,6 +19,7 @@ public class Pistol : Weapon
     public override void Attack()
     {
         base.Attack();
+        
     }
 
     public override void SecondaryAttack()
