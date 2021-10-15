@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour
         if (currentTarget != null)
         {
             float distanceBetweenPlayerAndEnemy = Vector3.Distance(currentTarget.transform.position, transform.position);
-            Debug.Log("This is being called");
+            //Debug.Log("This is being called");
             if (distanceBetweenPlayerAndEnemy > distanceOfShootingRange)
             {
                 navMeshAgent.SetDestination(currentTarget.transform.position);

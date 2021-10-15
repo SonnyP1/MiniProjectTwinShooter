@@ -23,6 +23,7 @@ public class GunPickUpInteractable : Interactable
             transform.rotation = playerWeaponInventory.GetWeaponSpawnLoc().rotation;
             transform.parent = playerWeaponInventory.GetWeaponSpawnLoc();
 
+
             gunInteractableTriggerBox.enabled = false;
         }
     }

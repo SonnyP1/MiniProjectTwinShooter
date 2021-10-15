@@ -8,6 +8,8 @@ public class WeaponInventorySystem : MonoBehaviour
     [SerializeField] List<Weapon> tempWeapons = new List<Weapon>();
     [SerializeField] Transform weaponsSpawnLoc;
     private int currentWeaponSelection;
+    private GameObject prefabUIToAdd;
+
     public Transform GetWeaponSpawnLoc() { return weaponsSpawnLoc; }
 
     public bool IsWeaponListEmpty() { if (tempWeapons.Count == 0) { return true; }else { return false; } }
@@ -27,6 +29,8 @@ public class WeaponInventorySystem : MonoBehaviour
                 return;
             }
         }
+        weaponToAdd.GiveTheUIMaxAmmoForCurrentWeapon();
+        weaponToAdd.SpawnWeaponUI();
         tempWeapons.Add(weaponToAdd);
     }
     
