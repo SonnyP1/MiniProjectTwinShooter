@@ -1,20 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class MainCanvas : MonoBehaviour
 {
-    [Header("BulletManagementUI")] 
+    [Header("BulletUIManagement")] 
     [SerializeField] RectTransform originSpawnPoint;
     [SerializeField] GameObject[] prefabUIToSpawn;
     private Weapon.WeaponType _weaponType;
     private GameObject parentObject;
     private GameObject weaponUIToSpawn;
     private int maxAmmoGiven;
-    private List<GameObject> ammoGameObjects = new List<GameObject>();
+    private List<List<GameObject>> weaponsUIList = new List<List<GameObject>>();
+
 
     private void Start()
     {
@@ -26,6 +28,14 @@ public class MainCanvas : MonoBehaviour
     {
         _weaponType = newTypeOfWeapon;
         SpawnWeaponUI();
+    }
+
+    public void UpdateWeaponUISelection(int currentSelection,bool setActive)
+    {
+        GameObject tempObj = weaponsUIList[currentSelection][0];
+        GameObject tempObj2 = tempObj.transform.parent.gameObject;
+        Debug.Log(tempObj2.transform.parent.gameObject.name);
+        tempObj2.transform.parent.gameObject.SetActive(setActive);
     }
     void SpawnWeaponUI()
     {
@@ -52,23 +62,24 @@ public class MainCanvas : MonoBehaviour
         }
     }
 
-    public void ShootUpdateBulletUI(int currentAmmo)
+    public void ShootUpdateBulletUI(int currentAmmo,int currentGunSelected)
     {
         int amtToCompare = Mathf.Abs(currentAmmo - maxAmmoGiven);
         for (int i = 0; i < amtToCompare; i++)
         {
-            ammoGameObjects[i].SetActive(true);
+            weaponsUIList[currentGunSelected][i].SetActive(true);
         }
     }
 
-    public void ReloadUpdateBulletUI(int currentAmmo)
+    public void ReloadUpdateBulletUI(int currentAmmo,int currentGunSelected)
     {
-        int amtToCompare = Mathf.Clamp(Mathf.Abs(currentAmmo - maxAmmoGiven),0,ammoGameObjects.Count-1);
+        int amtToCompare = Mathf.Clamp(Mathf.Abs(currentAmmo - maxAmmoGiven),0,maxAmmoGiven-1);
         Debug.Log(amtToCompare);
-        ammoGameObjects[amtToCompare].SetActive(false);
+        weaponsUIList[currentGunSelected][amtToCompare].SetActive(true);
     }
     void CreateUIForGun()
     {
+        List<GameObject> ammoGameObjects = new List<GameObject>();
         if (maxAmmoGiven != 0)
         {
             parentObject = new GameObject();
@@ -89,7 +100,8 @@ public class MainCanvas : MonoBehaviour
             }
             
             ammoGameObjects.Reverse();
-            ShootUpdateBulletUI(maxAmmoGiven);
+            weaponsUIList.Add(ammoGameObjects);
+            Debug.Log(weaponsUIList.Count);
         }
         else{Debug.Log("Max Ammo Given is 0");}
     }

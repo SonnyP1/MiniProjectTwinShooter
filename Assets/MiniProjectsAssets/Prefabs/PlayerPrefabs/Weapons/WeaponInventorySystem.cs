@@ -29,6 +29,8 @@ public class WeaponInventorySystem : MonoBehaviour
                 return;
             }
         }
+
+        weaponToAdd.SetCurrentWeaponSelection(currentWeaponSelection);
         weaponToAdd.GiveTheUIMaxAmmoForCurrentWeapon();
         weaponToAdd.SpawnWeaponUI();
         tempWeapons.Add(weaponToAdd);
@@ -42,11 +44,15 @@ public class WeaponInventorySystem : MonoBehaviour
             if(var == currentHeldWeapons[currentWeaponSelection])
             {
                 var.SetGunVisibility(true);
+                var.GetMainCanvas().UpdateWeaponUISelection(currentWeaponSelection,true);
             }
             else
             {
+                Debug.Log("TURN OFF THIS WEAPON: "+currentHeldWeapons[currentWeaponSelection].name);
                 var.SetGunVisibility(false);
+                var.GetMainCanvas().UpdateWeaponUISelection(currentWeaponSelection,false);
             }
+            var.SetCurrentWeaponSelection(currentWeaponSelection);
         }
     }
     
