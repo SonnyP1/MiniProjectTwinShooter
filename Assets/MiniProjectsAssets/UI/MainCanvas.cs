@@ -17,25 +17,19 @@ public class MainCanvas : MonoBehaviour
     private int maxAmmoGiven;
     private List<List<GameObject>> weaponsUIList = new List<List<GameObject>>();
 
-
-    private void Start()
+    public void SpawnWeaponUIAndInitNeededVariables(int maxAmmo,Weapon.WeaponType newTypeOfWeapon)
     {
-        Debug.Log(originSpawnPoint.position.x);
-    }
-
-    public void SetGivenMaxAmmo(int newGivenMaxAmmo) { maxAmmoGiven = newGivenMaxAmmo;}
-    public void SetWeaponTypeToSpawnThenSpawn(Weapon.WeaponType newTypeOfWeapon)
-    {
+        maxAmmoGiven = maxAmmo;
         _weaponType = newTypeOfWeapon;
         SpawnWeaponUI();
     }
-
-    public void UpdateWeaponUISelection(int currentSelection,bool setActive)
+    public void UpdateBulletUI(int currentAmmo, int currentGunSelected)
     {
-        GameObject tempObj = weaponsUIList[currentSelection][0];
-        GameObject tempObj2 = tempObj.transform.parent.gameObject;
-        Debug.Log(tempObj2.transform.parent.gameObject.name);
-        tempObj2.transform.parent.gameObject.SetActive(setActive);
+        int amtToCompare = Mathf.Abs(currentAmmo - maxAmmoGiven);
+        for (int i = 0; i < amtToCompare; i++)
+        {
+            weaponsUIList[currentGunSelected][i].SetActive(true);
+        }
     }
     void SpawnWeaponUI()
     {
@@ -62,21 +56,7 @@ public class MainCanvas : MonoBehaviour
         }
     }
 
-    public void ShootUpdateBulletUI(int currentAmmo,int currentGunSelected)
-    {
-        int amtToCompare = Mathf.Abs(currentAmmo - maxAmmoGiven);
-        for (int i = 0; i < amtToCompare; i++)
-        {
-            weaponsUIList[currentGunSelected][i].SetActive(true);
-        }
-    }
 
-    public void ReloadUpdateBulletUI(int currentAmmo,int currentGunSelected)
-    {
-        int amtToCompare = Mathf.Clamp(Mathf.Abs(currentAmmo - maxAmmoGiven),0,maxAmmoGiven-1);
-        Debug.Log(amtToCompare);
-        weaponsUIList[currentGunSelected][amtToCompare].SetActive(true);
-    }
     void CreateUIForGun()
     {
         List<GameObject> ammoGameObjects = new List<GameObject>();
@@ -101,7 +81,6 @@ public class MainCanvas : MonoBehaviour
             
             ammoGameObjects.Reverse();
             weaponsUIList.Add(ammoGameObjects);
-            Debug.Log(weaponsUIList.Count);
         }
         else{Debug.Log("Max Ammo Given is 0");}
     }

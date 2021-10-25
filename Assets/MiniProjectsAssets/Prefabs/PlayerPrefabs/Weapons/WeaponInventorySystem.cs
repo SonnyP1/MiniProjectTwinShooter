@@ -9,6 +9,7 @@ public class WeaponInventorySystem : MonoBehaviour
     [SerializeField] Transform weaponsSpawnLoc;
     private int currentWeaponSelection;
     private GameObject prefabUIToAdd;
+    private MainCanvas _mainCanvas;
 
     public Transform GetWeaponSpawnLoc() { return weaponsSpawnLoc; }
 
@@ -16,6 +17,7 @@ public class WeaponInventorySystem : MonoBehaviour
 
     private void Start()
     {
+        _mainCanvas = FindObjectOfType<MainCanvas>();
         ChooseWeaponsVisibility();
     }
 
@@ -29,10 +31,7 @@ public class WeaponInventorySystem : MonoBehaviour
                 return;
             }
         }
-
-        weaponToAdd.SetCurrentWeaponSelection(currentWeaponSelection);
-        weaponToAdd.GiveTheUIMaxAmmoForCurrentWeapon();
-        weaponToAdd.SpawnWeaponUI();
+        _mainCanvas.SpawnWeaponUIAndInitNeededVariables(weaponToAdd.GetMaxAmmo(),weaponToAdd.GetWeaponType());
         tempWeapons.Add(weaponToAdd);
     }
     
@@ -44,32 +43,31 @@ public class WeaponInventorySystem : MonoBehaviour
             if(var == currentHeldWeapons[currentWeaponSelection])
             {
                 var.SetGunVisibility(true);
-                var.GetMainCanvas().UpdateWeaponUISelection(currentWeaponSelection,true);
             }
             else
             {
                 Debug.Log("TURN OFF THIS WEAPON: "+currentHeldWeapons[currentWeaponSelection].name);
                 var.SetGunVisibility(false);
-                var.GetMainCanvas().UpdateWeaponUISelection(currentWeaponSelection,false);
             }
-            var.SetCurrentWeaponSelection(currentWeaponSelection);
         }
     }
     
     public void ChangeCurrentWeaponSelectionAndVisibility(int val)
     {
+        //check if the first one if scrolls down go to last one
         if (currentWeaponSelection.Equals(0) && val == -1)
         {
-            currentWeaponSelection = tempWeapons.Count - 1;
-            ChooseWeaponsVisibility();
+            ChangeWeaponToLastSelection();
             return;
         }
+        //check if the last one if scrolls up go to the first one
         if (currentWeaponSelection.Equals(tempWeapons.Count - 1) && val == 1)
         {
             currentWeaponSelection = 0;
             ChooseWeaponsVisibility();
             return;
         }
+        //regular weapon selection change
         currentWeaponSelection = Mathf.Clamp(val + currentWeaponSelection, 0, tempWeapons.Count - 1);
         ChooseWeaponsVisibility();
     }
@@ -84,17 +82,25 @@ public class WeaponInventorySystem : MonoBehaviour
     {
         Weapon[] currentHeldWeapons = tempWeapons.ToArray();
         currentHeldWeapons[currentWeaponSelection].Reload();
+        /* This CRASHES UNITY
+        while (currentHeldWeapons[currentWeaponSelection].GetReloadingCoroutine() != null)
+        {
+            _mainCanvas.UpdateBulletUI(currentHeldWeapons[currentWeaponSelection].GetCurrentAmmo(),currentWeaponSelection);
+        }
+        */
     }
 
     public void AttackPrimaryCurrentWeapon()
     {
         Weapon[] currentHeldWeapons = tempWeapons.ToArray();
         currentHeldWeapons[currentWeaponSelection].Attack();
+        _mainCanvas.UpdateBulletUI(currentHeldWeapons[currentWeaponSelection].GetCurrentAmmo(),currentWeaponSelection);
     }
 
     public void AttackSecondaryCurrentWeapon()
     {
         Weapon[] currentHeldWeapons = tempWeapons.ToArray();
         currentHeldWeapons[currentWeaponSelection].SecondaryAttack();
+        _mainCanvas.UpdateBulletUI(currentHeldWeapons[currentWeaponSelection].GetCurrentAmmo(),currentWeaponSelection);
     }
 }

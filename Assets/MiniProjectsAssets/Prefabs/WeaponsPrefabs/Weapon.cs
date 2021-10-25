@@ -26,21 +26,17 @@ public class Weapon : MonoBehaviour
     private Coroutine waitForNextShot;
     private Coroutine reloadingCoroutine;
     private float timeToUnParent = .2f;
-    private MainCanvas _mainCanvas;
-    private int currentWeaponSelection;
-    
+
+    public WeaponType GetWeaponType() { return typeOfWeapon;}
+
+    public Coroutine GetReloadingCoroutine() { return reloadingCoroutine;}
+    public int GetMaxAmmo() { return maxAmmo;}
+
+    public int GetCurrentAmmo() { return currentAmmo;}
     private void Awake()
     {
         currentAmmo = maxAmmo;
-        _mainCanvas = FindObjectOfType<MainCanvas>();
     }
-
-    public void SetCurrentWeaponSelection(int newCurrentWeaponSelection) { currentWeaponSelection = newCurrentWeaponSelection;}
-
-    public MainCanvas GetMainCanvas() { return _mainCanvas;}
-
-    public void GiveTheUIMaxAmmoForCurrentWeapon() { _mainCanvas.SetGivenMaxAmmo(maxAmmo); }
-    public void SpawnWeaponUI() { _mainCanvas.SetWeaponTypeToSpawnThenSpawn(typeOfWeapon); }
     public void SetProjectile(Projectile newProjectile) { projectileType = newProjectile; }
     public void SetSecoundaryProjectile(Projectile newProjectile) { secondaryProjectileType = newProjectile; }
     public void SetSpawnLoc(Transform newLoc)
@@ -53,7 +49,6 @@ public class Weapon : MonoBehaviour
         {
             FireBullet(projectileType, timeBetweenBulletsFirstAttack);
             currentAmmo = Mathf.Clamp(currentAmmo - regularAmmoReduce, 0, maxAmmo);
-            _mainCanvas.ShootUpdateBulletUI(currentAmmo,currentWeaponSelection);
         }
     }
     public virtual void SecondaryAttack()
@@ -62,7 +57,6 @@ public class Weapon : MonoBehaviour
         {
             FireBullet(secondaryProjectileType, timeBetweenBulletsSecoundAttack);
             currentAmmo = Mathf.Clamp(currentAmmo - altAmmoReduce,0,maxAmmo);
-            _mainCanvas.ShootUpdateBulletUI(currentAmmo,currentWeaponSelection);
         }
     }
 
@@ -90,9 +84,8 @@ public class Weapon : MonoBehaviour
         while(startTime < reloadTime)
         {
             startTime += Time.deltaTime;
-            Debug.Log("RELOADING: " + startTime);
             currentAmmo = (int)Mathf.Lerp(currentAmmo, maxAmmo, startTime / reloadTime);
-            _mainCanvas.ReloadUpdateBulletUI(currentAmmo,currentWeaponSelection);
+            Debug.Log("Reloading: "+currentAmmo);
             yield return new WaitForEndOfFrame();
         }
         reloadingCoroutine = null;
