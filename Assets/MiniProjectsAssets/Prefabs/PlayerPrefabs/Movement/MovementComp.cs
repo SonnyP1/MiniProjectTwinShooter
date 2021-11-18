@@ -112,4 +112,15 @@ public class MovementComp : MonoBehaviour
     {
         InputActions = inputAction;
     }
+    public Vector3 GetPlayerDesiredMoveDir()
+    {
+        return new Vector3(-MoveInput.y, 0f, MoveInput.x).normalized;
+    }
+
+    public Vector3 GetPlayerDesiredLookDir()
+    {
+        return gameObject.transform.forward;
+    }
+    
+    
 }

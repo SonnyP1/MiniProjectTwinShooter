@@ -10,43 +10,47 @@ public class MainCanvas : MonoBehaviour
 {
     [Header("BulletUIManagement")] 
     [SerializeField] RectTransform originSpawnPoint;
-    [SerializeField] GameObject[] prefabUIToSpawn;
-    private Weapon.WeaponType _weaponType;
+    private GameObject _weaponUI;
     private GameObject parentObject;
-    private GameObject weaponUIToSpawn;
     private int maxAmmoGiven;
     private List<List<GameObject>> weaponsUIList = new List<List<GameObject>>();
 
-    public void SpawnWeaponUIAndInitNeededVariables(int maxAmmo,Weapon.WeaponType newTypeOfWeapon)
+    public void SpawnWeaponUIAndInitNeededVariables(int maxAmmo,GameObject weaponUI)
     {
         maxAmmoGiven = maxAmmo;
-        _weaponType = newTypeOfWeapon;
+        _weaponUI = weaponUI;
         SpawnWeaponUI();
     }
-    public void UpdateBulletUI(int currentAmmo, int currentGunSelected)
+    public void UpdateShootBulletUI(int currentAmmo, int maxAmmo,int currentGunSelected)
     {
-        int amtToCompare = Mathf.Abs(currentAmmo - maxAmmoGiven);
-        for (int i = 0; i < amtToCompare; i++)
+        if (currentAmmo == maxAmmo)
         {
-            weaponsUIList[currentGunSelected][i].SetActive(true);
+            weaponsUIList[currentGunSelected][currentAmmo-1].SetActive(true);
+            return;
         }
+        weaponsUIList[currentGunSelected][currentAmmo].SetActive(true);
+    }
+
+    public void UpdateReloadBulletUI(int currentAmmo, int maxAmmo,int currentGunSelected)
+    {
+        if (currentAmmo == maxAmmo)
+        {
+            weaponsUIList[currentGunSelected][currentAmmo-1].SetActive(false);
+            return;
+        }
+        weaponsUIList[currentGunSelected][currentAmmo].SetActive(false);
+    }
+
+    public void SwapUIVisibility(int previousGunSelected,int currentGunSelected)
+    {
+        Debug.Log(weaponsUIList[previousGunSelected][0].gameObject.transform.parent.gameObject);
+        weaponsUIList[previousGunSelected][0].gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(false);
+        weaponsUIList[currentGunSelected][0].gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(true);
     }
     void SpawnWeaponUI()
     {
-        switch (_weaponType)
-        {
-            case Weapon.WeaponType.Pistol:
-                weaponUIToSpawn = prefabUIToSpawn[0];
-                break;
-            case Weapon.WeaponType.Shotgun:
-                weaponUIToSpawn = prefabUIToSpawn[1];
-                break;
-            default:
-                Debug.Log("Something with wrong!");
-                break;
-        }
 
-        if (weaponUIToSpawn != null)
+        if (_weaponUI != null)
         {
             CreateUIForGun();
         }
@@ -64,12 +68,12 @@ public class MainCanvas : MonoBehaviour
         {
             parentObject = new GameObject();
             parentObject.transform.parent = this.transform;
-            parentObject.name = _weaponType.ToString() + "UIParent";
+            parentObject.name = _weaponUI.ToString() + "UIParent";
             parentObject.transform.position = Vector3.zero;
             
             for (int i = 1; i < maxAmmoGiven + 1; i++)
             {
-                GameObject newAmmoUIElement = Instantiate(weaponUIToSpawn);
+                GameObject newAmmoUIElement = Instantiate(_weaponUI);
                 newAmmoUIElement.GetComponent<RectTransform>().SetParent(this.transform);
                 
                 Vector3 offset = new Vector3(originSpawnPoint.position.x * i, originSpawnPoint.position.y, originSpawnPoint.position.z);
@@ -79,7 +83,6 @@ public class MainCanvas : MonoBehaviour
                 ammoGameObjects.Add(newAmmoUIElement.GetComponent<BulletUIInfoHolder>().GetUnloadedGameObject());
             }
             
-            ammoGameObjects.Reverse();
             weaponsUIList.Add(ammoGameObjects);
         }
         else{Debug.Log("Max Ammo Given is 0");}

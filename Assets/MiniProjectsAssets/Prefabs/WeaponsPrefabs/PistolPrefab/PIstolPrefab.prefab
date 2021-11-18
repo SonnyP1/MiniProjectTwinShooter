@@ -84,7 +84,7 @@ MonoBehaviour:
   maxAmmo: 10
   reloadTime: 0.5
   meshRender: {fileID: 4500465020006811935}
-  typeOfWeapon: 1
+  bulletUI: {fileID: 7133880494215811452, guid: 7f07739fc7b3c494bb723b76514cd3a1, type: 3}
   projectile: {fileID: 756383067034050049, guid: e229fce7642b2154189cb41d6a98366f, type: 3}
   secondaryProjectile: {fileID: 9056436997583568616, guid: c12e75b0c9714a44e90a566985436ec6, type: 3}
   spawnLocation: {fileID: 5465891716019589585}

@@ -8,6 +8,7 @@ public class WeaponInventorySystem : MonoBehaviour
     [SerializeField] List<Weapon> tempWeapons = new List<Weapon>();
     [SerializeField] Transform weaponsSpawnLoc;
     private int currentWeaponSelection;
+    private int _previousWeaponSelection;
     private GameObject prefabUIToAdd;
     private MainCanvas _mainCanvas;
 
@@ -31,7 +32,7 @@ public class WeaponInventorySystem : MonoBehaviour
                 return;
             }
         }
-        _mainCanvas.SpawnWeaponUIAndInitNeededVariables(weaponToAdd.GetMaxAmmo(),weaponToAdd.GetWeaponType());
+        _mainCanvas.SpawnWeaponUIAndInitNeededVariables(weaponToAdd.GetMaxAmmo(),weaponToAdd.GetWeaponUI());
         tempWeapons.Add(weaponToAdd);
     }
     
@@ -43,11 +44,12 @@ public class WeaponInventorySystem : MonoBehaviour
             if(var == currentHeldWeapons[currentWeaponSelection])
             {
                 var.SetGunVisibility(true);
+                _mainCanvas.SwapUIVisibility(_previousWeaponSelection,currentWeaponSelection);
             }
             else
             {
-                Debug.Log("TURN OFF THIS WEAPON: "+currentHeldWeapons[currentWeaponSelection].name);
                 var.SetGunVisibility(false);
+                _mainCanvas.SwapUIVisibility(_previousWeaponSelection,currentWeaponSelection);
             }
         }
     }
@@ -63,17 +65,24 @@ public class WeaponInventorySystem : MonoBehaviour
         //check if the last one if scrolls up go to the first one
         if (currentWeaponSelection.Equals(tempWeapons.Count - 1) && val == 1)
         {
-            currentWeaponSelection = 0;
-            ChooseWeaponsVisibility();
+            ChangeWeaponToFirstSelection();
             return;
         }
         //regular weapon selection change
+        _previousWeaponSelection = currentWeaponSelection;
         currentWeaponSelection = Mathf.Clamp(val + currentWeaponSelection, 0, tempWeapons.Count - 1);
         ChooseWeaponsVisibility();
     }
-    
+
+    public void ChangeWeaponToFirstSelection()
+    {
+        _previousWeaponSelection = currentWeaponSelection;
+        currentWeaponSelection = 0;
+        ChooseWeaponsVisibility();
+    }
     public void ChangeWeaponToLastSelection()
     {
+        _previousWeaponSelection = currentWeaponSelection;
         currentWeaponSelection = tempWeapons.Count - 1;
         ChooseWeaponsVisibility();
     }
@@ -81,26 +90,20 @@ public class WeaponInventorySystem : MonoBehaviour
     public void ReloadCurrentWeapon()
     {
         Weapon[] currentHeldWeapons = tempWeapons.ToArray();
-        currentHeldWeapons[currentWeaponSelection].Reload();
-        /* This CRASHES UNITY
-        while (currentHeldWeapons[currentWeaponSelection].GetReloadingCoroutine() != null)
-        {
-            _mainCanvas.UpdateBulletUI(currentHeldWeapons[currentWeaponSelection].GetCurrentAmmo(),currentWeaponSelection);
-        }
-        */
+        currentHeldWeapons[currentWeaponSelection].Reload(_mainCanvas,currentWeaponSelection);
     }
 
     public void AttackPrimaryCurrentWeapon()
     {
         Weapon[] currentHeldWeapons = tempWeapons.ToArray();
         currentHeldWeapons[currentWeaponSelection].Attack();
-        _mainCanvas.UpdateBulletUI(currentHeldWeapons[currentWeaponSelection].GetCurrentAmmo(),currentWeaponSelection);
+        _mainCanvas.UpdateShootBulletUI(currentHeldWeapons[currentWeaponSelection].GetCurrentAmmo(),currentHeldWeapons[currentWeaponSelection].GetMaxAmmo(),currentWeaponSelection);
     }
 
     public void AttackSecondaryCurrentWeapon()
     {
         Weapon[] currentHeldWeapons = tempWeapons.ToArray();
         currentHeldWeapons[currentWeaponSelection].SecondaryAttack();
-        _mainCanvas.UpdateBulletUI(currentHeldWeapons[currentWeaponSelection].GetCurrentAmmo(),currentWeaponSelection);
+        _mainCanvas.UpdateShootBulletUI(currentHeldWeapons[currentWeaponSelection].GetCurrentAmmo(),currentHeldWeapons[currentWeaponSelection].GetMaxAmmo(),currentWeaponSelection);
     }
 }

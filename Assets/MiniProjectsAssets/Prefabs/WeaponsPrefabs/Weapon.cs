@@ -6,11 +6,6 @@ using UnityEngine.VFX;
 
 public class Weapon : MonoBehaviour
 {
-    public enum WeaponType
-    {
-        Shotgun,
-        Pistol
-    }
     [SerializeField] int regularAmmoReduce;
     [SerializeField] int altAmmoReduce;
     [SerializeField] float timeBetweenBulletsFirstAttack;
@@ -19,7 +14,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] int maxAmmo;
     [SerializeField] float reloadTime;
     [SerializeField] MeshRenderer meshRender;
-    [SerializeField] WeaponType typeOfWeapon;
+    [SerializeField] GameObject bulletUI;
     private Projectile projectileType;
     private Projectile secondaryProjectileType;
     private List<Transform> spawnLocList = new List<Transform>();
@@ -27,9 +22,7 @@ public class Weapon : MonoBehaviour
     private Coroutine reloadingCoroutine;
     private float timeToUnParent = .2f;
 
-    public WeaponType GetWeaponType() { return typeOfWeapon;}
-
-    public Coroutine GetReloadingCoroutine() { return reloadingCoroutine;}
+    public GameObject GetWeaponUI() { return bulletUI;}
     public int GetMaxAmmo() { return maxAmmo;}
 
     public int GetCurrentAmmo() { return currentAmmo;}
@@ -71,14 +64,14 @@ public class Weapon : MonoBehaviour
             }
         }
     }
-    public virtual void Reload()
+    public virtual void Reload(MainCanvas mainCanvas,int currentWeaponSelected)
     {
         if (!IsReloading())
         {
-            reloadingCoroutine = StartCoroutine(ReloadTimer());
+            reloadingCoroutine = StartCoroutine(ReloadTimer(mainCanvas,currentWeaponSelected));
         }
     }
-    IEnumerator ReloadTimer()
+    IEnumerator ReloadTimer(MainCanvas mainCanvas,int currentWeaponSelected)
     {
         float startTime = 0;
         while(startTime < reloadTime)
@@ -86,6 +79,7 @@ public class Weapon : MonoBehaviour
             startTime += Time.deltaTime;
             currentAmmo = (int)Mathf.Lerp(currentAmmo, maxAmmo, startTime / reloadTime);
             Debug.Log("Reloading: "+currentAmmo);
+            mainCanvas.UpdateReloadBulletUI(currentAmmo,maxAmmo,currentWeaponSelected);
             yield return new WaitForEndOfFrame();
         }
         reloadingCoroutine = null;

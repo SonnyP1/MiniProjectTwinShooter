@@ -28,8 +28,8 @@ public class Shotgun : Weapon
         base.SecondaryAttack();
     }
 
-    public override void Reload()
+    public override void Reload(MainCanvas mainCanvas,int currentWeaponSelected)
     {
-        base.Reload();
+        base.Reload(mainCanvas, currentWeaponSelected);
     }
 }

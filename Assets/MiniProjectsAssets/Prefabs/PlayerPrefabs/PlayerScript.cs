@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,14 @@ using UnityEngine.InputSystem;
 public class PlayerScript : MonoBehaviour
 {
     //Movement
-    private MovementComp movementComp;
+    private MovementComp _movementComp;
+    private Vector2 _moveInput;
     //Gun Stuff
     private WeaponInventorySystem weaponInventorySystem;
     //Player Needs Stuff
     private PlayerInputs playerInput;
+    //Animation Stuff
+    private Animator _animator;
 
     private void Awake()
     {
@@ -28,9 +32,10 @@ public class PlayerScript : MonoBehaviour
 
     private void Start()
     {
-        movementComp = GetComponent<MovementComp>();
-        movementComp.SetInput(playerInput);
+        _movementComp = GetComponent<MovementComp>();
+        _movementComp.SetInput(playerInput);
         weaponInventorySystem = GetComponent<WeaponInventorySystem>();
+        _animator = GetComponent<Animator>();
 
         playerInput.Gameplay.Move.performed += OnMoveInputUpdate;
         playerInput.Gameplay.Move.canceled += OnMoveInputUpdate;
@@ -42,7 +47,12 @@ public class PlayerScript : MonoBehaviour
         playerInput.Gameplay.Reload.performed += OnReloadButtonPressed;
         playerInput.Gameplay.Interact.performed += OnInteractButtonPressed;
     }
-    
+
+    private void Update()
+    {
+        UpdateAnimationParameters();
+    }
+
     //INTERACT INPUTS
     void OnInteractButtonPressed(InputAction.CallbackContext ctx)
     {
@@ -56,16 +66,17 @@ public class PlayerScript : MonoBehaviour
     //MOVEMENT INPUTS
     void OnMouseUpdate(InputAction.CallbackContext ctx)
     {
-        movementComp.SetMouseLoc(ctx.ReadValue<Vector2>());
-        movementComp.UpdateRotation();
+        _movementComp.SetMouseLoc(ctx.ReadValue<Vector2>());
+        _movementComp.UpdateRotation();
     }
     void OnMoveInputUpdate(InputAction.CallbackContext ctx)
     {
-        movementComp.SetMoveInput(ctx.ReadValue<Vector2>());
+        _moveInput = ctx.ReadValue<Vector2>();
+        _movementComp.SetMoveInput(_moveInput);
     }
     void OnDodgePressedUpdated(InputAction.CallbackContext ctx)
     {
-        movementComp.MainDodge();
+        _movementComp.MainDodge();
     }
     
     //WEAPON INPUTS
@@ -93,6 +104,19 @@ public class PlayerScript : MonoBehaviour
         if (!weaponInventorySystem.IsWeaponListEmpty())
         {
             weaponInventorySystem.AttackSecondaryCurrentWeapon();
+        }
+    }
+    
+    void UpdateAnimationParameters()
+    {
+        if (_moveInput == Vector2.zero)
+        {
+            _animator.SetFloat("MovementActive",0);
+        }
+        else
+        {
+            //make timer to lerp between 0 and 1
+            _animator.SetFloat("MovementActive",1);
         }
     }
 

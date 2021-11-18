@@ -281,7 +281,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 710360533}
-  m_LocalRotation: {x: 0.45627728, y: -0.5359067, z: 0.4360203, w: 0.56080425}
+  m_LocalRotation: {x: 0.45627725, y: -0.5359067, z: 0.43602034, w: 0.56080425}
   m_LocalPosition: {x: -1.6499996, y: 9.4, z: 0.48999977}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -318,7 +318,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7775551, y: 1}
+    m_SensorSize: {x: 2.0941176, y: 1}
     Iso: 200
     ShutterSpeed: 0.005
     Aperture: 16
@@ -412,7 +412,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 713750076}
-  m_LocalRotation: {x: 0.45627728, y: -0.5359067, z: 0.4360203, w: 0.56080425}
+  m_LocalRotation: {x: 0.45627725, y: -0.5359067, z: 0.43602034, w: 0.56080425}
   m_LocalPosition: {x: 10.82832, y: 9.900002, z: -7.091263}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -743,6 +743,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &990291177 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1289648560154197103, guid: ca25b403142f3db48a3d9ce2ad450494, type: 3}
+  m_PrefabInstance: {fileID: 874668042}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &990291183
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990291177}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 02dd6406ed1ebc248b2fafd0485e0de9, type: 3}
+  m_Controller: {fileID: 9100000, guid: f720d068dc9bc7e4a8e6f228f4730349, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1003515997
 GameObject:
   m_ObjectHideFlags: 0
@@ -870,9 +894,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BindingMode: 4
   m_FollowOffset: {x: 1.7888489, y: 8.620002, z: -0.08126259}
-  m_XDamping: 1
-  m_YDamping: 1
-  m_ZDamping: 1
+  m_XDamping: 0
+  m_YDamping: 0
+  m_ZDamping: 0
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
@@ -1096,9 +1120,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originSpawnPoint: {fileID: 1003515998}
-  prefabUIToSpawn:
-  - {fileID: 7133880494215811452, guid: 7f07739fc7b3c494bb723b76514cd3a1, type: 3}
-  - {fileID: 9223136948935089638, guid: 5ed41264fd1aa2f4f8a0e3269922b758, type: 3}
 --- !u!1 &1936251102
 GameObject:
   m_ObjectHideFlags: 0

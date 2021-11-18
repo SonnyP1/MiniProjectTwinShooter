@@ -105,7 +105,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4946403059514563111}
-  - component: {fileID: 3018859090489955518}
   - component: {fileID: 6505086795319308303}
   m_Layer: 0
   m_Name: EnemyPrefab
@@ -129,23 +128,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3018859090489955518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7993938507931321691}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79f2abd30cd84844ea5ccffb2397607f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radiusOfFindRange: 0
-  enemyMovementSpeed: 0
-  maskToLookFor:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!195 &6505086795319308303
 NavMeshAgent:
   m_ObjectHideFlags: 0
