@@ -29,6 +29,14 @@ public class InteractComp : MonoBehaviour
             }
         }
     }
+
+    public void RemoveInteractable(Interactable interactableToRemove)
+    {
+        if (interactablesInRange.Contains(interactableToRemove))
+        {
+            interactablesInRange.Remove(interactableToRemove);
+        }
+    }
     public void InteractWithInteractable()
     {
         Interactable closestInteractable = GetClosestInteractable();

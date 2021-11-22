@@ -15,12 +15,15 @@ public class Weapon : MonoBehaviour
     [SerializeField] float reloadTime;
     [SerializeField] MeshRenderer meshRender;
     [SerializeField] GameObject bulletUI;
+    [SerializeField] int bulletDmg;
     private Projectile projectileType;
     private Projectile secondaryProjectileType;
     private List<Transform> spawnLocList = new List<Transform>();
     private Coroutine waitForNextShot;
     private Coroutine reloadingCoroutine;
     private float timeToUnParent = .2f;
+
+    public int GetBulletDamage() { return bulletDmg; }
 
     public GameObject GetWeaponUI() { return bulletUI;}
     public int GetMaxAmmo() { return maxAmmo;}

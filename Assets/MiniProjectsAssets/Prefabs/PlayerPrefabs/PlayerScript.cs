@@ -107,6 +107,7 @@ public class PlayerScript : MonoBehaviour
         }
     }
     
+    //Animation
     void UpdateAnimationParameters()
     {
         if (_moveInput == Vector2.zero)
@@ -116,7 +117,7 @@ public class PlayerScript : MonoBehaviour
         else
         {
             //make timer to lerp between 0 and 1
-            _animator.SetFloat("MovementActive",1);
+            _animator.SetFloat("MovementActive",0.168f);
         }
     }
 

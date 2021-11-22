@@ -2,12 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+public enum ProjectileInstigator
+{
+    Player,
+    Enemy
+}
+
 public class Projectile : MonoBehaviour
 {
     [SerializeField] float projectileSpeed;
+    [SerializeField] ProjectileInstigator _instigator;
     private Rigidbody projectileRB;
     private MeshRenderer meshRender;
+    
     void Start()
     {
         projectileRB = GetComponent<Rigidbody>();
@@ -34,10 +41,22 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Player") && _instigator == ProjectileInstigator.Player)
+        {
+            return;
+        }
+
+        if (other.CompareTag("Enemy") && _instigator == ProjectileInstigator.Enemy)
+        {
+            return;
+        }
+        
         if(other.gameObject.GetComponent<Projectile>() || other.GetComponent<InteractComp>() || other.GetComponent<Weapon>())
         {
             return;
         }
+        
+        //if has health comp do dmg then destroy
         Destroy(gameObject);
     }
 }

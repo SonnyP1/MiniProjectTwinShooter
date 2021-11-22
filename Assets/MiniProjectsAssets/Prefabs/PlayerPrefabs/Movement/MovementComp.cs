@@ -84,7 +84,6 @@ public class MovementComp : MonoBehaviour
             }
             Velocity.x = LastInputs.x * DodgeMultiplierOfWalkingSpeed * WalkingSpeed;
             Velocity.z = LastInputs.z * DodgeMultiplierOfWalkingSpeed * WalkingSpeed;
-
             yield return new WaitForEndOfFrame();
         }
 

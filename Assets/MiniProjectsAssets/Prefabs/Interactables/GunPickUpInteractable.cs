@@ -8,6 +8,7 @@ public class GunPickUpInteractable : Interactable
     private WeaponInventorySystem playerWeaponInventory;
     private BoxCollider gunInteractableTriggerBox;
     private Weapon typeOfWeapon;
+    private InteractComp _playerInteractComp;
     private void Awake()
     {
         gunInteractableTriggerBox = gameObject.GetComponent<BoxCollider>();
@@ -22,8 +23,7 @@ public class GunPickUpInteractable : Interactable
             transform.position = playerWeaponInventory.GetWeaponSpawnLoc().position;
             transform.rotation = playerWeaponInventory.GetWeaponSpawnLoc().rotation;
             transform.parent = playerWeaponInventory.GetWeaponSpawnLoc();
-
-
+            _playerInteractComp.RemoveInteractable(this);
             gunInteractableTriggerBox.enabled = false;
         }
     }
@@ -32,6 +32,7 @@ public class GunPickUpInteractable : Interactable
         if(other.CompareTag("PlayerInteract"))
         {
             playerWeaponInventory = other.transform.parent.GetComponent<WeaponInventorySystem>();
+            _playerInteractComp = other.transform.GetComponent<InteractComp>();
         }
     }
 }

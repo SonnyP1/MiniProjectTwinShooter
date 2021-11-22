@@ -23,12 +23,11 @@ public class MainCanvas : MonoBehaviour
     }
     public void UpdateShootBulletUI(int currentAmmo, int maxAmmo,int currentGunSelected)
     {
-        if (currentAmmo == maxAmmo)
+        for (int i = currentAmmo; i < maxAmmo; i++)
         {
-            weaponsUIList[currentGunSelected][currentAmmo-1].SetActive(true);
-            return;
+            weaponsUIList[currentGunSelected][i].SetActive(true);
         }
-        weaponsUIList[currentGunSelected][currentAmmo].SetActive(true);
+       
     }
 
     public void UpdateReloadBulletUI(int currentAmmo, int maxAmmo,int currentGunSelected)
