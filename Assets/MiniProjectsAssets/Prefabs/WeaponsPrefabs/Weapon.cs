@@ -15,15 +15,12 @@ public class Weapon : MonoBehaviour
     [SerializeField] float reloadTime;
     [SerializeField] MeshRenderer meshRender;
     [SerializeField] GameObject bulletUI;
-    [SerializeField] int bulletDmg;
     private Projectile projectileType;
     private Projectile secondaryProjectileType;
     private List<Transform> spawnLocList = new List<Transform>();
     private Coroutine waitForNextShot;
     private Coroutine reloadingCoroutine;
     private float timeToUnParent = .2f;
-
-    public int GetBulletDamage() { return bulletDmg; }
 
     public GameObject GetWeaponUI() { return bulletUI;}
     public int GetMaxAmmo() { return maxAmmo;}
@@ -33,12 +30,17 @@ public class Weapon : MonoBehaviour
     {
         currentAmmo = maxAmmo;
     }
-    public void SetProjectile(Projectile newProjectile) { projectileType = newProjectile; }
+
+    public void SetProjectile(Projectile newProjectile)
+    {
+        projectileType = newProjectile;
+    }
     public void SetSecoundaryProjectile(Projectile newProjectile) { secondaryProjectileType = newProjectile; }
     public void SetSpawnLoc(Transform newLoc)
     {
         spawnLocList.Add(newLoc);
     }
+
     public virtual void Attack()
     {
         if (!IsReloading() && currentAmmo > 0 && waitForNextShot == null)
@@ -58,12 +60,15 @@ public class Weapon : MonoBehaviour
 
     void FireBullet(Projectile projectileType,float timeBetweenBullets)
     {
+        
         if(waitForNextShot==null)
         {
             waitForNextShot = StartCoroutine(WaitForNextShot(timeBetweenBullets));
             foreach (Transform var in spawnLocList)
             {
-                StartCoroutine(WaitToUnParentBullet(Instantiate(projectileType, var), timeToUnParent));
+                Projectile spawnProjectile = Instantiate(projectileType, var);
+                spawnProjectile.SetInstigator(gameObject.transform.parent.gameObject.transform.parent.gameObject);
+                StartCoroutine(WaitToUnParentBullet(spawnProjectile, timeToUnParent));
             }
         }
     }
@@ -81,7 +86,7 @@ public class Weapon : MonoBehaviour
         {
             startTime += Time.deltaTime;
             currentAmmo = (int)Mathf.Lerp(currentAmmo, maxAmmo, startTime / reloadTime);
-            Debug.Log("Reloading: "+currentAmmo);
+            //Debug.Log("Reloading: "+currentAmmo);
             mainCanvas.UpdateReloadBulletUI(currentAmmo,maxAmmo,currentWeaponSelected);
             yield return new WaitForEndOfFrame();
         }
@@ -105,7 +110,7 @@ public class Weapon : MonoBehaviour
         waitForNextShot = null;
     }
 
-    bool IsReloading() { if (reloadingCoroutine == null) { return false; } else { return true; } }
+    public bool IsReloading() { if (reloadingCoroutine == null) { return false; } else { return true; } }
     public void SetGunVisibility(bool isVis)
     {
         if (meshRender != null)

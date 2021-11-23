@@ -14,6 +14,8 @@ public class PlayerScript : MonoBehaviour
     private PlayerInputs playerInput;
     //Animation Stuff
     private Animator _animator;
+    //Health
+    private HealthComp _healthComp;
 
     private void Awake()
     {
@@ -36,7 +38,8 @@ public class PlayerScript : MonoBehaviour
         _movementComp.SetInput(playerInput);
         weaponInventorySystem = GetComponent<WeaponInventorySystem>();
         _animator = GetComponent<Animator>();
-
+        _healthComp = GetComponent<HealthComp>();
+        _healthComp.onDamageTaken += DmgTaken;
         playerInput.Gameplay.Move.performed += OnMoveInputUpdate;
         playerInput.Gameplay.Move.canceled += OnMoveInputUpdate;
         playerInput.Gameplay.MouseLoc.performed += OnMouseUpdate;
@@ -47,6 +50,8 @@ public class PlayerScript : MonoBehaviour
         playerInput.Gameplay.Reload.performed += OnReloadButtonPressed;
         playerInput.Gameplay.Interact.performed += OnInteractButtonPressed;
     }
+
+
 
     private void Update()
     {
@@ -119,6 +124,12 @@ public class PlayerScript : MonoBehaviour
             //make timer to lerp between 0 and 1
             _animator.SetFloat("MovementActive",0.168f);
         }
+    }
+    
+    private void DmgTaken(int newamt, int oldamt, object attacker)
+    {
+        //play dead animation
+        Debug.Log($"My health is: {newamt}");
     }
 
 }

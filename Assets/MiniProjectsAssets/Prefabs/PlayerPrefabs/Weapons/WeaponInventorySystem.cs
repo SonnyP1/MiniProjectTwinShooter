@@ -96,14 +96,22 @@ public class WeaponInventorySystem : MonoBehaviour
     public void AttackPrimaryCurrentWeapon()
     {
         Weapon[] currentHeldWeapons = tempWeapons.ToArray();
-        currentHeldWeapons[currentWeaponSelection].Attack();
-        _mainCanvas.UpdateShootBulletUI(currentHeldWeapons[currentWeaponSelection].GetCurrentAmmo(),currentHeldWeapons[currentWeaponSelection].GetMaxAmmo(),currentWeaponSelection);
+        if (!currentHeldWeapons[currentWeaponSelection].IsReloading())
+        {
+            currentHeldWeapons[currentWeaponSelection].Attack();
+            _mainCanvas.UpdateShootBulletUI(currentHeldWeapons[currentWeaponSelection].GetCurrentAmmo(),
+                currentHeldWeapons[currentWeaponSelection].GetMaxAmmo(), currentWeaponSelection);
+        }
     }
 
     public void AttackSecondaryCurrentWeapon()
     {
         Weapon[] currentHeldWeapons = tempWeapons.ToArray();
-        currentHeldWeapons[currentWeaponSelection].SecondaryAttack();
-        _mainCanvas.UpdateShootBulletUI(currentHeldWeapons[currentWeaponSelection].GetCurrentAmmo(),currentHeldWeapons[currentWeaponSelection].GetMaxAmmo(),currentWeaponSelection);
+        if (!currentHeldWeapons[currentWeaponSelection].IsReloading())
+        {
+            currentHeldWeapons[currentWeaponSelection].SecondaryAttack();
+            _mainCanvas.UpdateShootBulletUI(currentHeldWeapons[currentWeaponSelection].GetCurrentAmmo(),
+                currentHeldWeapons[currentWeaponSelection].GetMaxAmmo(), currentWeaponSelection);
+        }
     }
 }

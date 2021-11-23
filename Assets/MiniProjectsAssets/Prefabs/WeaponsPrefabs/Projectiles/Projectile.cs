@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ProjectileInstigator
-{
-    Player,
-    Enemy
-}
 
 public class Projectile : MonoBehaviour
 {
     [SerializeField] float projectileSpeed;
-    [SerializeField] ProjectileInstigator _instigator;
+    [SerializeField]  int _dmg = 1;
+    private GameObject _instigator;
     private Rigidbody projectileRB;
     private MeshRenderer meshRender;
-    
+
+    public void SetInstigator(GameObject newInstigator)
+    {
+        _instigator = newInstigator;
+    }
     void Start()
     {
         projectileRB = GetComponent<Rigidbody>();
@@ -41,22 +41,28 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && _instigator == ProjectileInstigator.Player)
-        {
-            return;
-        }
 
-        if (other.CompareTag("Enemy") && _instigator == ProjectileInstigator.Enemy)
+        if (other.gameObject == _instigator)
         {
             return;
         }
-        
         if(other.gameObject.GetComponent<Projectile>() || other.GetComponent<InteractComp>() || other.GetComponent<Weapon>())
         {
             return;
         }
+
         
         //if has health comp do dmg then destroy
+        BoxCollider hitBox = other.GetComponent<BoxCollider>();
+        if (hitBox)
+        {
+            HealthComp hitBoxHealthComp = hitBox.gameObject.GetComponent<HealthComp>();
+            if (hitBoxHealthComp)
+            {
+                hitBoxHealthComp.CallTakeDmg(_dmg);
+            }
+        }
+
         Destroy(gameObject);
     }
 }

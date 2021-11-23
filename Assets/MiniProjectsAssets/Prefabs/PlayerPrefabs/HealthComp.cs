@@ -14,17 +14,7 @@ public class HealthComp : MonoBehaviour
     public OnHitPointDepleted onHitPointDepleted;
 
     public int GetMaxHitPoints() { return maxHitPoints;}
-    private void OnParticleCollision(GameObject other)
-    {
-        Debug.Log($"I am hit by: {other}");
-        Weapon weapon = other.GetComponentInParent<Weapon>();
-        if (weapon != null)
-        {
-            _attacker = other;
-            TakeDmg(weapon.GetBulletDamage());
-        }
-        
-    }
+    
 
     public void CallTakeDmg(int amt)
     {

@@ -18,6 +18,7 @@ public class GunPickUpInteractable : Interactable
     {
         if (gunInteractableTriggerBox.enabled == true)
         {
+            
             playerWeaponInventory.AddToWeaponList(typeOfWeapon);
             playerWeaponInventory.ChangeWeaponToLastSelection();
             transform.position = playerWeaponInventory.GetWeaponSpawnLoc().position;

@@ -42,7 +42,7 @@ public class MainCanvas : MonoBehaviour
 
     public void SwapUIVisibility(int previousGunSelected,int currentGunSelected)
     {
-        Debug.Log(weaponsUIList[previousGunSelected][0].gameObject.transform.parent.gameObject);
+        //Debug.Log(weaponsUIList[previousGunSelected][0].gameObject.transform.parent.gameObject);
         weaponsUIList[previousGunSelected][0].gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(false);
         weaponsUIList[currentGunSelected][0].gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(true);
     }
