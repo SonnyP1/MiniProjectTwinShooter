@@ -32,7 +32,7 @@ public class PerceptionSystem : MonoBehaviour
         {
             for (int j = 0; j < _listerners.Count; j++)
             {
-                PerceptionComp listener = _listerners[i];
+                PerceptionComp listener = _listerners[j];
                 if (listener)
                 {
                     listener.EvaluatePerception(_stimulies[i]);
