@@ -8,6 +8,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3634974795763339373, guid: 40c8a312b11011c4d9ca1a51d5fe22ad, type: 3}
+      propertyPath: cooldownShoot
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3634974795763339373, guid: 40c8a312b11011c4d9ca1a51d5fe22ad, type: 3}
       propertyPath: spawnLoc.Array.size
       value: 1
       objectReference: {fileID: 0}

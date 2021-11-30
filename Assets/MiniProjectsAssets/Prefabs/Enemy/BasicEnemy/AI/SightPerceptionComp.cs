@@ -11,6 +11,11 @@ public class SightPerceptionComp : PerceptionComp
 	[SerializeField] float eyeHeight = 1.6f;
 	[SerializeField] float attackRadius = 1.6f;
 
+	public float GetAttackRadius()
+	{
+		return attackRadius;
+	}
+
 	public override bool EvaluatePerception(PerceptionStimuli stimuli)
     {
 	    bool InSightRange = this.InSightRange(stimuli);
@@ -57,10 +62,12 @@ public class SightPerceptionComp : PerceptionComp
 	bool IsNotBlocked(PerceptionStimuli stimuli)
 	{
 		Vector3 stimuliCheckPos = stimuli.GetComponent<Collider>().bounds.center;
+
 		Vector3 EyePos = transform.position+Vector3.up*eyeHeight;
 		Ray ray = new Ray(EyePos,(stimuliCheckPos-EyePos).normalized);
 		if(Physics.Raycast(ray,out RaycastHit HitResult,lostSightRadius))
 		{
+			Debug.DrawLine(ray.origin,HitResult.point);
 			if(HitResult.collider.gameObject == stimuli.gameObject)
 			{
 				return true;
@@ -76,8 +83,9 @@ public class SightPerceptionComp : PerceptionComp
 
 	bool IsInPeripheralAngle(PerceptionStimuli stimuli)
 	{
-		float AngleToStimuli = Mathf.Rad2Deg * Mathf.Acos(Vector3.Dot(transform.forward,(stimuli.transform.position - transform.position).normalized));
-		return AngleToStimuli < peripheralAngleDegree/2;
+		return true;
+		//float AngleToStimuli = Mathf.Rad2Deg * Mathf.Acos(Vector3.Dot(transform.forward,(stimuli.transform.position - transform.position).normalized));
+		//return AngleToStimuli < peripheralAngleDegree/2;
 	}
 	
 	private void OnDrawGizmos()

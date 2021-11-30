@@ -34,18 +34,23 @@ public class Zombie : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (_startTime < cooldownShoot)
+        {
+            _startTime += Time.deltaTime;
+        }
+    }
+
     private void Attack()
     {
         Debug.Log("SHOOT");
-
-        while (_startTime < cooldownShoot)
+        if (_startTime >= cooldownShoot)
         {
-            _startTime += Time.deltaTime;
-            return;
+            _startTime = 0;
+            SpawnProjectile();
         }
-
-        _startTime = 0;
-        SpawnProjectile();
+        
     }
     private void SpawnProjectile()
     {

@@ -10,7 +10,7 @@ public class AIController : MonoBehaviour
     public OnBlackBoardKeyUpdated onBlackBoardKeyUpdated;
     public AttackTarget onAttack;
     private Dictionary<string, object> _blackBoard = new Dictionary<string, object>();
-    
+
     public void AddBlackBoardKey(string key,object defaultVal = null)
     {
         if (!_blackBoard.ContainsKey(key))
@@ -50,6 +50,7 @@ public class AIController : MonoBehaviour
         if (_perceptionComp != null)
         {
             _perceptionComp.onPerceptionUpdated += PerceptionUpdated;
+            SetBlackBoardKey("AttackRange",((SightPerceptionComp)_perceptionComp).GetAttackRadius());
         }
     }
 

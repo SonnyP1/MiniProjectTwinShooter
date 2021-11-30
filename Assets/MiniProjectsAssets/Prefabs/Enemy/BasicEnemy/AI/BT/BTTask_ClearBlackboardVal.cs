@@ -13,7 +13,7 @@ public class BTTask_ClearBlackboardVal : BTNode
     public override EBTTaskResult Execute()
     {
         AIC.SetBlackBoardKey(_key,null);
-        Debug.Log($"SetBlackboard key {_key} to null");
+        //Debug.Log($"SetBlackboard key {_key} to null");
         if (AIC.GetBlackBoardVal(_key) == null)
         {
             return EBTTaskResult.Success;

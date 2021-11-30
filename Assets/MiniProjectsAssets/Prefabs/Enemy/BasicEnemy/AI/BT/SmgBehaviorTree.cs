@@ -9,28 +9,24 @@ public class SmgBehaviorTree : BehaviorTree
         base.Init(aiController);
         aiController.AddBlackBoardKey("Target");
         aiController.AddBlackBoardKey("LastKnownLoc");
-        Sequence RootSequence = new Sequence(aiController);
-
-        BTTask_AttackTarget AttackTarget = new BTTask_AttackTarget(aiController,"Target",21f);
-        RootSequence.AddChild(AttackTarget);
+        aiController.AddBlackBoardKey("AttackRange");
+        Selector RootSelector = new Selector(aiController);
         
-        BTTask_MoveTo MoveToTarget = new BTTask_MoveTo(aiController, "Target",21f);
+        BTTask_AttackTarget AttackTarget = new BTTask_AttackTarget(aiController,"Target");
+        RootSelector.AddChild(AttackTarget);
+
+        BTTask_MoveTo MoveToTarget = new BTTask_MoveTo(aiController, "Target",8f);
         BlackboardDecorator MoveToTargetDeco = new BlackboardDecorator(aiController, MoveToTarget, "Target", EKeyQuery.Set, EObserverAborts.Both);
-        RootSequence.AddChild(MoveToTargetDeco);
-
-       
-
-        
-
+        RootSelector.AddChild(MoveToTargetDeco);
 
         Sequence MoveThenCheck = new Sequence(aiController);
-        BTTask_MoveTo MoveToLastKnowLoc = new BTTask_MoveTo(aiController, "LastKnownLoc", 0.5f);
-        BlackboardDecorator MoveToLastKnowLocDeo = new BlackboardDecorator(aiController, MoveToLastKnowLoc, "LastKnownLoc", EKeyQuery.Set, EObserverAborts.Both);
-        MoveThenCheck.AddChild(MoveToLastKnowLocDeo);
-        BTTask_ClearBlackboardVal ClearLastKnowLocVal = new BTTask_ClearBlackboardVal(aiController, "LastKnownLoc");
-        MoveThenCheck.AddChild(ClearLastKnowLocVal);
-        RootSequence.AddChild(MoveThenCheck);
+            BTTask_MoveTo MoveToLastKnowLoc = new BTTask_MoveTo(aiController, "LastKnownLoc", 0.5f);
+            BlackboardDecorator MoveToLastKnowLocDeo = new BlackboardDecorator(aiController, MoveToLastKnowLoc, "LastKnownLoc", EKeyQuery.Set, EObserverAborts.Both);
+            MoveThenCheck.AddChild(MoveToLastKnowLocDeo);
+            BTTask_ClearBlackboardVal ClearLastKnowLocVal = new BTTask_ClearBlackboardVal(aiController, "LastKnownLoc");
+            MoveThenCheck.AddChild(ClearLastKnowLocVal);
+        RootSelector.AddChild(MoveThenCheck);
 
-        SetRoot(RootSequence);
+        SetRoot(RootSelector);
     }
 }
