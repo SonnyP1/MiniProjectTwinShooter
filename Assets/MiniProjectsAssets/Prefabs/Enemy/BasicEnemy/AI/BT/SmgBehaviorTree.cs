@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieBehaviorTree : BehaviorTree
+public class SmgBehaviorTree : BehaviorTree
 {
     public override void Init(AIController aiController)
     {
@@ -10,7 +10,7 @@ public class ZombieBehaviorTree : BehaviorTree
         aiController.AddBlackBoardKey("Target");
         aiController.AddBlackBoardKey("LastKnownLoc");
         Sequence RootSequence = new Sequence(aiController);
-        
+
         BTTask_AttackTarget AttackTarget = new BTTask_AttackTarget(aiController,"Target",21f);
         RootSequence.AddChild(AttackTarget);
         
@@ -24,11 +24,11 @@ public class ZombieBehaviorTree : BehaviorTree
 
 
         Sequence MoveThenCheck = new Sequence(aiController);
-            BTTask_MoveTo MoveToLastKnowLoc = new BTTask_MoveTo(aiController, "LastKnownLoc", 0.5f);
-            BlackboardDecorator MoveToLastKnowLocDeo = new BlackboardDecorator(aiController, MoveToLastKnowLoc, "LastKnownLoc", EKeyQuery.Set, EObserverAborts.Both);
-            MoveThenCheck.AddChild(MoveToLastKnowLocDeo);
-            BTTask_ClearBlackboardVal ClearLastKnowLocVal = new BTTask_ClearBlackboardVal(aiController, "LastKnownLoc");
-            MoveThenCheck.AddChild(ClearLastKnowLocVal);
+        BTTask_MoveTo MoveToLastKnowLoc = new BTTask_MoveTo(aiController, "LastKnownLoc", 0.5f);
+        BlackboardDecorator MoveToLastKnowLocDeo = new BlackboardDecorator(aiController, MoveToLastKnowLoc, "LastKnownLoc", EKeyQuery.Set, EObserverAborts.Both);
+        MoveThenCheck.AddChild(MoveToLastKnowLocDeo);
+        BTTask_ClearBlackboardVal ClearLastKnowLocVal = new BTTask_ClearBlackboardVal(aiController, "LastKnownLoc");
+        MoveThenCheck.AddChild(ClearLastKnowLocVal);
         RootSequence.AddChild(MoveThenCheck);
 
         SetRoot(RootSequence);

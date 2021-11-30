@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6386203887665328945}
   - component: {fileID: 9071923190900340065}
   - component: {fileID: 7895027359705065525}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,6 +51,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -93,7 +94,7 @@ GameObject:
   - component: {fileID: 8461633814863915792}
   - component: {fileID: 756383067034050049}
   - component: {fileID: 7019356783340066911}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BasicProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,6 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileSpeed: 10
+  _dmg: 1
 --- !u!65 &7019356783340066911
 BoxCollider:
   m_ObjectHideFlags: 0

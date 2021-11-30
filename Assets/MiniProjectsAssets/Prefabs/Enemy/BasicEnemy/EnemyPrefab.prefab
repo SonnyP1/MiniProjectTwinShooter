@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8779185084255971406}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SpawnLocs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 4837149102259976059}
   - component: {fileID: 925125707159546070}
   - component: {fileID: 2440254685739628761}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: boxColliision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 2222954231304391168}
   - component: {fileID: 3634974795763339373}
   - component: {fileID: 8987506119240752999}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: EnemyPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}

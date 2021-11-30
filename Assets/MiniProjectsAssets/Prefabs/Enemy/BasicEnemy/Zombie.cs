@@ -52,7 +52,9 @@ public class Zombie : MonoBehaviour
         //Debug.Log("SPAWN PROJECTILE");
         for (int i = 0; i < spawnLoc.Length; i++)
         {
-            Instantiate(projectileToSpawn, spawnLoc[i]);
+            GameObject newProjectile = Instantiate(projectileToSpawn, spawnLoc[i]);
+            newProjectile.GetComponent<Projectile>().SetInstigator(gameObject);
+            StartCoroutine(WaitToUnParentBullet(newProjectile.GetComponent<Projectile>(), 0.5f));
         }
     }
     private void Death()
@@ -78,6 +80,11 @@ public class Zombie : MonoBehaviour
         //_animator.SetLayerWeight(_layerUpperBodyID,0);
     }
     
-
+    IEnumerator WaitToUnParentBullet(Projectile projectileToWait,float timeToUnParent)
+    {
+        yield return new WaitForSeconds(timeToUnParent);
+        if(projectileToWait)
+            projectileToWait.transform.parent = null;
+    }
 
 }
