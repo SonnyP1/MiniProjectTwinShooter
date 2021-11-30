@@ -66,16 +66,16 @@ public class MainCanvas : MonoBehaviour
         if (maxAmmoGiven != 0)
         {
             parentObject = new GameObject();
-            parentObject.transform.parent = this.transform;
+            parentObject.transform.parent = originSpawnPoint.transform;
             parentObject.name = _weaponUI.ToString() + "UIParent";
             parentObject.transform.position = Vector3.zero;
-            
+
             for (int i = 1; i < maxAmmoGiven + 1; i++)
             {
                 GameObject newAmmoUIElement = Instantiate(_weaponUI);
                 newAmmoUIElement.GetComponent<RectTransform>().SetParent(this.transform);
                 
-                Vector3 offset = new Vector3(originSpawnPoint.position.x * i, originSpawnPoint.position.y, originSpawnPoint.position.z);
+                Vector3 offset = new Vector3(originSpawnPoint.position.x * i, 0,0);
                 newAmmoUIElement.GetComponent<RectTransform>().SetPositionAndRotation(offset,Quaternion.identity);
                 
                 newAmmoUIElement.GetComponent<RectTransform>().SetParent(parentObject.transform);

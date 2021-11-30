@@ -16,6 +16,7 @@ public class PlayerScript : MonoBehaviour
     private Animator _animator;
     //Health
     private HealthComp _healthComp;
+    private UIHealth _uiHealth;
 
     private void Awake()
     {
@@ -34,12 +35,23 @@ public class PlayerScript : MonoBehaviour
 
     private void Start()
     {
+       
         _movementComp = GetComponent<MovementComp>();
         _movementComp.SetInput(playerInput);
+        
         weaponInventorySystem = GetComponent<WeaponInventorySystem>();
         _animator = GetComponent<Animator>();
+        
         _healthComp = GetComponent<HealthComp>();
         _healthComp.onDamageTaken += DmgTaken;
+        _healthComp.onHitPointDepleted += Death;
+        _uiHealth = FindObjectOfType<UIHealth>();
+        if (_uiHealth)
+        {
+            _uiHealth.SetMaxHealth(_healthComp.GetMaxHitPoints());
+            _uiHealth.UpdateHeartFillContainers(_healthComp.GetMaxHitPoints());
+        }
+
         playerInput.Gameplay.Move.performed += OnMoveInputUpdate;
         playerInput.Gameplay.Move.canceled += OnMoveInputUpdate;
         playerInput.Gameplay.MouseLoc.performed += OnMouseUpdate;
@@ -50,6 +62,7 @@ public class PlayerScript : MonoBehaviour
         playerInput.Gameplay.Reload.performed += OnReloadButtonPressed;
         playerInput.Gameplay.Interact.performed += OnInteractButtonPressed;
     }
+
 
 
 
@@ -82,6 +95,7 @@ public class PlayerScript : MonoBehaviour
     void OnDodgePressedUpdated(InputAction.CallbackContext ctx)
     {
         _movementComp.MainDodge();
+        
     }
     
     //WEAPON INPUTS
@@ -128,8 +142,17 @@ public class PlayerScript : MonoBehaviour
     
     private void DmgTaken(int newamt, int oldamt, object attacker)
     {
-        //play dead animation
-        Debug.Log($"My health is: {newamt}");
+        //change UI
+        if (_uiHealth)
+        {
+            _uiHealth.UpdateHeartFillContainers(newamt);
+        }
+    }
+    
+    private void Death()
+    {
+        _uiHealth.UpdateHeartFillContainers(0);
+        //Play Death
     }
 
 }

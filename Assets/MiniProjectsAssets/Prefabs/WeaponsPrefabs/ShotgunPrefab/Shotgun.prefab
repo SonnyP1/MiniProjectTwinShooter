@@ -198,7 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   regularAmmoReduce: 1
   altAmmoReduce: 2
-  timeBetweenBulletsFirstAttack: 0.3
+  timeBetweenBulletsFirstAttack: 0.6
   timeBetweenBulletsSecoundAttack: 0.6
   currentAmmo: 0
   maxAmmo: 8

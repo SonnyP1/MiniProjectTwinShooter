@@ -39,7 +39,6 @@ public class BlackboardDecorator :Decorator
 
     private void KeyUpdated(string key, object value)
     {
-        Debug.Log($"{key} has change to: {value} ");
         if (key != _keyName)
         {
             return;
