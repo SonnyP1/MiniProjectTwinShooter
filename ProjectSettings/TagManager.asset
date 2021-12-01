@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlayerInteract
   - Enemy
+  - Floor
   layers:
   - Default
   - TransparentFX

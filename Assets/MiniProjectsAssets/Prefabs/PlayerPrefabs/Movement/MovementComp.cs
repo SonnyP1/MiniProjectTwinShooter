@@ -37,7 +37,6 @@ public class MovementComp : MonoBehaviour
             Ray pointToRayCast = Camera.main.ScreenPointToRay(MouseLoc);
             if (Physics.Raycast(pointToRayCast, out hit))
             {
-                //Debug.Log("Hit Point: " + hit.point);
                 Quaternion playerDir = Quaternion.LookRotation(hit.point - transform.position);
                 playerDir.x = 0;
                 playerDir.z = 0;

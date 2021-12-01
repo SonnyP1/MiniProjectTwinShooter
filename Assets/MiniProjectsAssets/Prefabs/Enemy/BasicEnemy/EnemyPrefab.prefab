@@ -212,7 +212,7 @@ MonoBehaviour:
   sightRadius: 24.24
   lostSightRadius: 35.03
   peripheralAngleDegree: 360
-  eyeHeight: 2
+  eyeHeight: 0.5
   attackRadius: 8.97
 --- !u!114 &3634974795763339373
 MonoBehaviour:

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -68,13 +69,25 @@ public class SightPerceptionComp : PerceptionComp
 		if(Physics.Raycast(ray,out RaycastHit HitResult,lostSightRadius))
 		{
 			Debug.DrawLine(ray.origin,HitResult.point);
-			if(HitResult.collider.gameObject == stimuli.gameObject)
+			try
+			{
+				if (HitResult.collider.gameObject.transform.parent.gameObject == stimuli.gameObject)
+				{
+					return true;
+				}
+				else
+				{
+					if (HitResult.collider.gameObject == stimuli.gameObject)
+					{
+						return true;
+					}
+
+					return false;
+				}
+			}
+			catch (NullReferenceException) //sometimes line 74 has null reference but overall performance work 
 			{
 				return true;
-			}
-			else
-			{
-				return false;
 			}
 		}
 
