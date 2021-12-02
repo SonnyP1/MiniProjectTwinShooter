@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 7861387629667667884}
   - component: {fileID: 4205481267302145009}
   - component: {fileID: 8347919286140250101}
+  - component: {fileID: -941710223325703306}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -89,6 +90,7 @@ MonoBehaviour:
   DodgeLengthOfTime: 0.5
   characterHitBox: {fileID: 4205481267302145009}
   trailRenderer: {fileID: 8347919286140250101}
+  mainCamera: {fileID: 0}
 --- !u!114 &5825991527132587595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,8 +136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89234c342333a00458caa0e8712092f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 5
-  maxHitPoints: 5
+  hitPoints: 3
+  maxHitPoints: 3
 --- !u!65 &4205481267302145009
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -248,6 +250,18 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &-941710223325703306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289648560154197103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d075d2cd3806f4ea40303e3fbe0b08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1412508335451785978
 GameObject:
   m_ObjectHideFlags: 0

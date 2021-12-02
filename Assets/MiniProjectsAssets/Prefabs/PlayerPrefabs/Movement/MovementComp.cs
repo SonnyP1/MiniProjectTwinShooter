@@ -13,6 +13,9 @@ public class MovementComp : MonoBehaviour
     [SerializeField] BoxCollider characterHitBox;
     [SerializeField] TrailRenderer trailRenderer;
     IInputActionCollection InputActions;
+    [Header("Camera to Raycast off")] 
+    [SerializeField] Camera mainCamera;
+    
     Vector3 Velocity;
     const float GRAVITY = -9.8f;
     Vector2 MoveInput;
@@ -34,7 +37,7 @@ public class MovementComp : MonoBehaviour
         if (DodgeCoroutine == null)
         {
             RaycastHit hit;
-            Ray pointToRayCast = Camera.main.ScreenPointToRay(MouseLoc);
+            Ray pointToRayCast = mainCamera.ScreenPointToRay(MouseLoc);
             if (Physics.Raycast(pointToRayCast, out hit))
             {
                 Quaternion playerDir = Quaternion.LookRotation(hit.point - transform.position);

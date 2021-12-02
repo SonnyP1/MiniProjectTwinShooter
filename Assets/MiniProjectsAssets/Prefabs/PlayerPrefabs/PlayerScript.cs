@@ -51,6 +51,7 @@ public class PlayerScript : MonoBehaviour
             _uiHealth.SetMaxHealth(_healthComp.GetMaxHitPoints());
             _uiHealth.UpdateHeartFillContainers(_healthComp.GetMaxHitPoints());
         }
+        else{Debug.Log("UI Health doesnt exist!");}
 
         playerInput.Gameplay.Move.performed += OnMoveInputUpdate;
         playerInput.Gameplay.Move.canceled += OnMoveInputUpdate;
