@@ -204,6 +204,33 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "DeathCtrl",
+            "id": "b7b0f2b1-3e65-4649-8680-ff8f26fc4c6c",
+            "actions": [
+                {
+                    "name": "Restart",
+                    "type": "Button",
+                    "id": "b772afb9-fdd6-48a5-b5f9-6e682f67f3f4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "fc35c680-de27-46ea-ad49-c68db68a6a41",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Restart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

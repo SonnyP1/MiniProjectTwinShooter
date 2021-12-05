@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 public class PlayerScript : MonoBehaviour
 {
     //Movement
@@ -62,9 +63,14 @@ public class PlayerScript : MonoBehaviour
         playerInput.Gameplay.MouseWheel.performed += OnMouseWheelUpdated;
         playerInput.Gameplay.Reload.performed += OnReloadButtonPressed;
         playerInput.Gameplay.Interact.performed += OnInteractButtonPressed;
+        playerInput.DeathCtrl.Restart.performed += OnRestartButtonPressed;
+        playerInput.DeathCtrl.Restart.Disable();
     }
 
-
+    private void OnRestartButtonPressed(InputAction.CallbackContext obj)
+    {
+        SceneManager.LoadScene(1);
+    }
 
 
     private void Update()
@@ -152,8 +158,11 @@ public class PlayerScript : MonoBehaviour
     
     private void Death()
     {
+        playerInput.Gameplay.Disable();
         _uiHealth.UpdateHeartFillContainers(0);
-        //Play Death
+        _animator.SetTrigger("DeathTrigger");
+        Destroy(FindObjectOfType<PerceptionSystem>().gameObject);
+        playerInput.DeathCtrl.Restart.Enable();
     }
 
 }

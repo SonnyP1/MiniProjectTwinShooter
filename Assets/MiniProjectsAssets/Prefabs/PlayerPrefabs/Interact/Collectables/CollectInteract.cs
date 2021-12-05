@@ -5,6 +5,7 @@ using UnityEngine;
 public class CollectInteract : Interactable
 {
     private ScoreKeeper _scoreKeeper;
+    private InteractComp _playerInteractComp;
 
     void Start()
     {
@@ -19,7 +20,16 @@ public class CollectInteract : Interactable
         if (_scoreKeeper)
         {
             _scoreKeeper.AddOrSubScore(-1);
+            _playerInteractComp.RemoveInteractable(this);
             Destroy(gameObject);
+        }
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("PlayerInteract"))
+        {
+            _playerInteractComp = other.transform.GetComponent<InteractComp>();
         }
     }
 }

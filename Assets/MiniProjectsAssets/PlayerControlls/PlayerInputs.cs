@@ -217,6 +217,33 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""DeathCtrl"",
+            ""id"": ""b7b0f2b1-3e65-4649-8680-ff8f26fc4c6c"",
+            ""actions"": [
+                {
+                    ""name"": ""Restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""b772afb9-fdd6-48a5-b5f9-6e682f67f3f4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""fc35c680-de27-46ea-ad49-c68db68a6a41"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -231,6 +258,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         m_Gameplay_MouseWheel = m_Gameplay.FindAction("MouseWheel", throwIfNotFound: true);
         m_Gameplay_Reload = m_Gameplay.FindAction("Reload", throwIfNotFound: true);
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
+        // DeathCtrl
+        m_DeathCtrl = asset.FindActionMap("DeathCtrl", throwIfNotFound: true);
+        m_DeathCtrl_Restart = m_DeathCtrl.FindAction("Restart", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -365,6 +395,39 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // DeathCtrl
+    private readonly InputActionMap m_DeathCtrl;
+    private IDeathCtrlActions m_DeathCtrlActionsCallbackInterface;
+    private readonly InputAction m_DeathCtrl_Restart;
+    public struct DeathCtrlActions
+    {
+        private @PlayerInputs m_Wrapper;
+        public DeathCtrlActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Restart => m_Wrapper.m_DeathCtrl_Restart;
+        public InputActionMap Get() { return m_Wrapper.m_DeathCtrl; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DeathCtrlActions set) { return set.Get(); }
+        public void SetCallbacks(IDeathCtrlActions instance)
+        {
+            if (m_Wrapper.m_DeathCtrlActionsCallbackInterface != null)
+            {
+                @Restart.started -= m_Wrapper.m_DeathCtrlActionsCallbackInterface.OnRestart;
+                @Restart.performed -= m_Wrapper.m_DeathCtrlActionsCallbackInterface.OnRestart;
+                @Restart.canceled -= m_Wrapper.m_DeathCtrlActionsCallbackInterface.OnRestart;
+            }
+            m_Wrapper.m_DeathCtrlActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Restart.started += instance.OnRestart;
+                @Restart.performed += instance.OnRestart;
+                @Restart.canceled += instance.OnRestart;
+            }
+        }
+    }
+    public DeathCtrlActions @DeathCtrl => new DeathCtrlActions(this);
     public interface IGameplayActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -375,5 +438,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         void OnMouseWheel(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+    }
+    public interface IDeathCtrlActions
+    {
+        void OnRestart(InputAction.CallbackContext context);
     }
 }

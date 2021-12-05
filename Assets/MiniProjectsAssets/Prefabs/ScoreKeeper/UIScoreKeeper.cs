@@ -8,11 +8,10 @@ public class UIScoreKeeper : MonoBehaviour
     [SerializeField] Text _scoreText;
     [SerializeField] Text _youWinText;
     [SerializeField] int _amountOfItemToGrabToWin;
-    private ScoreKeeper _scoreKeeper;
+    [SerializeField] ScoreKeeper _scoreKeeper;
 
     void Start()
     {
-        _scoreKeeper = FindObjectOfType<ScoreKeeper>();
         if (_amountOfItemToGrabToWin == null || _scoreText == null)
         {
             Debug.Log("UIScoreKeeper is missing a field");
