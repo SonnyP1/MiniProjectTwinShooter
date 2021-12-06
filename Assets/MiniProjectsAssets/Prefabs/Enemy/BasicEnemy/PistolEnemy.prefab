@@ -71,6 +71,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PistolEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 8493181246443550860, guid: 40c8a312b11011c4d9ca1a51d5fe22ad, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 635cb25ea3f6cc24f93ebb5d3f908585, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40c8a312b11011c4d9ca1a51d5fe22ad, type: 3}
 --- !u!4 &960340548030884008 stripped
@@ -96,7 +100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 494870, guid: e00779cd7489ab048a33aaee2859eec6, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 494870, guid: e00779cd7489ab048a33aaee2859eec6, type: 3}
       propertyPath: m_LocalPosition.x

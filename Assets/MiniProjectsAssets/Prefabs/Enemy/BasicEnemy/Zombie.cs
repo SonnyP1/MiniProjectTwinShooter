@@ -7,9 +7,11 @@ using UnityEngine.AI;
 public class Zombie : MonoBehaviour
 {
     private HealthComp _healthComp;
-    //private Animator _animator;
+    private Animator _animator;
     private AIController _aiController;
     private int _layerUpperBodyID;
+    private NavMeshAgent _navMeshAgent;
+    private BoxCollider _boxCollider;
     
     [SerializeField] GameObject projectileToSpawn;
     [SerializeField] Transform[] spawnLoc;
@@ -18,8 +20,10 @@ public class Zombie : MonoBehaviour
 
     private void Start()
     {
+        _boxCollider = GetComponent<BoxCollider>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
         _healthComp = GetComponent<HealthComp>();
-        //_animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
         _aiController = GetComponent<AIController>();
         //_layerUpperBodyID = _animator.GetLayerIndex("UpperBody");
         if (_healthComp)
@@ -64,15 +68,17 @@ public class Zombie : MonoBehaviour
     }
     private void Death()
     {
-        //play death animation
+        _animator.SetTrigger("Death");
         Debug.Log("AM DEAD RIP");
-        //_animator.SetTrigger("DeathTrigger");
+        Destroy(_aiController);
+        Destroy(_navMeshAgent);
+        Destroy(_boxCollider);
+        StartCoroutine(DestroyGameobject());
     }
     
     private void TookDamage(int newamt, int oldamt,object attacker)
     {
         Debug.Log($"I took: {oldamt-newamt} of damage");
-        _aiController.SetBlackBoardKey("Target",((GameObject)attacker).transform.position);
     }
 
     void DestroySelf()
@@ -90,6 +96,12 @@ public class Zombie : MonoBehaviour
         yield return new WaitForSeconds(timeToUnParent);
         if(projectileToWait)
             projectileToWait.transform.parent = null;
+    }
+
+    IEnumerator DestroyGameobject()
+    {
+        yield return new WaitForSeconds(5);
+        DestroySelf();
     }
 
 }

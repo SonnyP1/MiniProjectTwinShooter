@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 
 public class Projectile : MonoBehaviour
@@ -46,13 +47,18 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
+
+        if (other.gameObject.GetComponent<NavMeshAgent>() && _instigator.GetComponent<NavMeshAgent>())
+        {
+            return;
+        }
         if(other.gameObject.GetComponent<Projectile>() || other.GetComponent<InteractComp>() || other.GetComponent<Weapon>())
         {
             return;
         }
 
         
-        //if has health comp do dmg then destroy
+        //if has hitbox do dmg then destroy for player
         BoxCollider hitBox = other.GetComponent<BoxCollider>();
         if (hitBox)
         {
@@ -62,7 +68,8 @@ public class Projectile : MonoBehaviour
                 hitBoxHealthComp.CallTakeDmg(_dmg);
             }
         }
-
+        
+        
         Destroy(gameObject);
     }
 }

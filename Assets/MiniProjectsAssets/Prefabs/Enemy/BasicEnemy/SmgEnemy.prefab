@@ -25,7 +25,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 449682, guid: a53656e37c8d6ce4caf30fa3e2cb27fb, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 449682, guid: a53656e37c8d6ce4caf30fa3e2cb27fb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -140,6 +140,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmgEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 8493181246443550860, guid: 40c8a312b11011c4d9ca1a51d5fe22ad, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 8ed86b8ef3190a9429964c02eaa4f31c, type: 3}
     - target: {fileID: 8987506119240752999, guid: 40c8a312b11011c4d9ca1a51d5fe22ad, type: 3}
       propertyPath: _behaviorTree
       value: 

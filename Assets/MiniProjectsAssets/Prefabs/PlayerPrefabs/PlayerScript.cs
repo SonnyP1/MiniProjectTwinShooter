@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour
 {
     //Movement
@@ -18,6 +19,8 @@ public class PlayerScript : MonoBehaviour
     //Health
     private HealthComp _healthComp;
     private UIHealth _uiHealth;
+    //UI
+    [SerializeField] Text _loseText;
 
     private void Awake()
     {
@@ -161,8 +164,8 @@ public class PlayerScript : MonoBehaviour
         playerInput.Gameplay.Disable();
         _uiHealth.UpdateHeartFillContainers(0);
         _animator.SetTrigger("DeathTrigger");
-        Destroy(FindObjectOfType<PerceptionSystem>().gameObject);
         playerInput.DeathCtrl.Restart.Enable();
+        _loseText.enabled = true;
     }
 
 }
